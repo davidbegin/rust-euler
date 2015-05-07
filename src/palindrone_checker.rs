@@ -11,8 +11,15 @@ pub fn call(num: i32) -> bool {
     }
 
     println!("array of digits: {:?}", array_of_digits);
+    println!("length {}", array_of_digits.len());
 
-    println!("we broke!");
-    true
+    let odd_eh = array_of_digits.len() % 2 != 0;
+
+    if odd_eh {
+        false
+    } else {
+        true
+    }
+
 }
 
