@@ -30,4 +30,5 @@ fn numbers_are_palindrones_sometimes() {
     assert!(palindrone_checker::call(211112));
     assert!(palindrone_checker::call(123321));
     assert!(palindrone_checker::call(44555544));
+    assert!(!palindrone_checker::call(44555549));
 }
