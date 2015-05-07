@@ -10,8 +10,7 @@ pub fn call(num: i32) -> bool {
         if master_value < 1 { break }
     }
 
-    let odd_eh = array_of_digits.len() % 2 != 0;
-    if odd_eh { return false }
+    if array_of_digits.len() % 2 != 0 { return false }
 
     loop {
         if array_of_digits.len() == 0 { break }
