@@ -9,6 +9,12 @@
 // Find the largest palindrome made from the product of two 3-digit numbers.
 
 mod palindrone_checker;
+mod matrix_builder;
+
+#[test]
+fn matrix_test() {
+    assert_eq!(matrix_builder::new(2), [[2, 2], [2, 1], [1, 1]])
+}
 
 #[test]
 fn nine_zero_zero_nine_is_a_palindrone() {
