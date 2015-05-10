@@ -13,6 +13,12 @@ mod matrix_builder;
 mod product_array_builder;
 
 #[test]
+fn we_can_fold_what_we_want() {
+    let result = product_array_builder::new(2);
+    assert_eq!(result.len(), 9604);
+}
+
+#[test]
 fn products_for_2_digits() {
     assert_eq!(product_array_builder::new(2).len(), 9604)
 }
