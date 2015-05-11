@@ -1,6 +1,6 @@
 #![allow(unused_variables)]
 
-pub fn call(num: i32) -> bool {
+pub fn call(num: &i32) -> bool {
     let mut master_value = num.clone();
     let mut array_of_digits: Vec<i32> = vec![];
 

@@ -13,9 +13,13 @@ mod matrix_builder;
 mod product_array_builder;
 
 #[test]
-fn we_can_fold_what_we_want() {
+fn we_can_filter_what_we_want() {
+    // .filter(|&x| x % 2 == 0)
     let result = product_array_builder::new(2);
-    assert_eq!(result.len(), 9604);
+    // assert_eq!(
+    //     result.iter().filter(|&x| !palindrone_checker::call(x) ),
+    //     9604
+    // );
 }
 
 #[test]
