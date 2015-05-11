@@ -1,6 +1,3 @@
-#![allow(dead_code)]
-#![allow(unused_variables)]
-
 // #4
 // A palindromic number reads the same both ways.
 // The largest palindrome made from the product
@@ -9,7 +6,6 @@
 // Find the largest palindrome made from the product of two 3-digit numbers.
 
 mod palindrone_checker;
-mod matrix_builder;
 mod product_array_builder;
 
 #[test]
@@ -20,12 +16,6 @@ fn we_can_filter_what_we_want() {
 #[test]
 fn products_for_2_digits() {
     assert_eq!(product_array_builder::new(2).len(), 9604);
-    assert_eq!(!product_array_builder::new(3).len(), 9604);
-}
-
-#[test]
-fn matrix_test() {
-    assert_eq!(matrix_builder::new(2), [[2, 2], [2, 1], [1, 1]])
 }
 
 #[test]

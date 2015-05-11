@@ -7,7 +7,7 @@ mod palindrone_checker;
 mod product_array_builder;
 
 fn main() {
-    the_shorter_way();
+    problem_four();
 }
 
 fn problem_four() {
