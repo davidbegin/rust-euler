@@ -1,14 +1,23 @@
+#![allow(dead_code)]
+#![allow(unused_variables)]
+#![allow(unused_imports)]
+
 extern crate type_printer;
 mod palindrone_checker;
 mod product_array_builder;
 
 fn main() {
-    let result = product_array_builder::new(2);
+    the_shorter_way();
+}
 
-    let filtered_result = result
+fn problem_four() {
+    let result = product_array_builder::new(3);
+
+    let max = result
         .iter()
-        .filter(|&x| palindrone_checker::call(x) );
+        .filter(|&x| palindrone_checker::call(x) )
+        .max()
+        .unwrap();
 
-    let max = filtered_result.max();
-    println!("{:?}", max.unwrap());
+    println!("{:?}", max);
 }
