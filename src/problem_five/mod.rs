@@ -7,15 +7,15 @@
 
 pub fn result() {
     println!("\nProblem 5 coming soon!\n");
-
-    let num = 2520;
-    assert_eq!(smallest_num_finder(), 2520);
+    // assert_eq!(smallest_num_finder(), 2520);
+    println!("smalled for 1 to 20: {}", smallest_num_finder());
+    assert_eq!(smallest_num_finder(), 232792560);
 }
 
 fn smallest_num_finder() -> i32 {
     let mut result: i32 = 0;
 
-    for x in 1..100000 {
+    for x in 1..1000000000 {
         if divisible_by_all_numbers(x) {
             result = x;
             break;
@@ -28,7 +28,7 @@ fn smallest_num_finder() -> i32 {
 fn divisible_by_all_numbers(num: i32) -> bool {
     let mut divisible_by_all_numbers_eh: bool = true;
 
-    for x in 1..11 {
+    for x in 1..21 {
         if num % x != 0 {
             divisible_by_all_numbers_eh = false;
         }
