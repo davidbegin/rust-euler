@@ -10,6 +10,15 @@ pub fn result() {
 
     let num = 2520;
 
+    let result = divisible_by_all_numbers(num);
+    println!("{} divisible by all numbers: {}", num, result);
+
+    let num = 2521;
+    let result = divisible_by_all_numbers(num);
+    println!("{} divisible by all numbers: {}", num, result);
+}
+
+fn divisible_by_all_numbers(num: i32) -> bool {
     let mut divisible_by_all_numbers_eh: bool = true;
 
     for x in 1..11 {
@@ -18,5 +27,5 @@ pub fn result() {
         }
     }
 
-    println!("Divisible by all numbers: {}", divisible_by_all_numbers_eh);
+    divisible_by_all_numbers_eh
 }
