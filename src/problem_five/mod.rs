@@ -7,4 +7,16 @@
 
 pub fn result() {
     println!("\nProblem 5 coming soon!\n");
+
+    let num = 2520;
+
+    let mut divisible_by_all_numbers_eh: bool = true;
+
+    for x in 1..11 {
+        if num % x != 0 {
+            divisible_by_all_numbers_eh = false;
+        }
+    }
+
+    println!("Divisible by all numbers: {}", divisible_by_all_numbers_eh);
 }
