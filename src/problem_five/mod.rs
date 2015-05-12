@@ -9,13 +9,20 @@ pub fn result() {
     println!("\nProblem 5 coming soon!\n");
 
     let num = 2520;
+    assert_eq!(smallest_num_finder(), 2520);
+}
 
-    let result = divisible_by_all_numbers(num);
-    println!("{} divisible by all numbers: {}", num, result);
+fn smallest_num_finder() -> i32 {
+    let mut result: i32 = 0;
 
-    let num = 2521;
-    let result = divisible_by_all_numbers(num);
-    println!("{} divisible by all numbers: {}", num, result);
+    for x in 1..100000 {
+        if divisible_by_all_numbers(x) {
+            result = x;
+            break;
+        }
+    }
+
+    result
 }
 
 fn divisible_by_all_numbers(num: i32) -> bool {
