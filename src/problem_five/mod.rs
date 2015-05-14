@@ -6,10 +6,8 @@
 // by all of the numbers from 1 to 20?
 
 pub fn result() {
-    println!("\nProblem 5 coming soon!\n");
-    // assert_eq!(smallest_num_finder(), 2520);
+    println!("\n(a very slow) Problem 5!\n");
     println!("smalled for 1 to 20: {}", smallest_num_finder());
-    assert_eq!(smallest_num_finder(), 232792560);
 }
 
 fn smallest_num_finder() -> i32 {
@@ -36,4 +34,13 @@ fn divisible_by_all_numbers(num: i32) -> bool {
     }
 
     divisible_by_all_numbers_eh
+}
+
+#[cfg(test)]
+mod tests {
+    use super::smallest_num_finder;
+
+    fn it_can_find_the_smallest_number() {
+        assert_eq!(smallest_num_finder(), 232792560);
+    }
 }

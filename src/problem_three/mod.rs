@@ -3,7 +3,7 @@
 // What is the largest prime factor of the number 600851475143 ?
 
 pub fn result() {
-    println!("\nProblem 3 coming soon!");
+    println!("\nProblem 3 coming soon!\n");
 }
 
 fn prime_factors(number_to_find_primes_of: i32) -> [i32; 4] {

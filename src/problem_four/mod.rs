@@ -12,6 +12,7 @@ mod product_array_builder;
 mod palindrone_checker;
 
 pub fn result() {
+    println!("\nProblem 4\n");
     let result = product_array_builder::new(3);
 
     let max = result
