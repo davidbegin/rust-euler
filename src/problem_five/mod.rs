@@ -15,7 +15,7 @@ pub fn result() {
 fn smallest_num_finder() -> i32 {
     let mut result: i32 = 0;
 
-    for x in 2..1000000000 {
+    for x in 1..1000000000 {
         if divisible_by_all_numbers(x) {
             result = x;
             break;
@@ -28,7 +28,7 @@ fn smallest_num_finder() -> i32 {
 fn divisible_by_all_numbers(num: i32) -> bool {
     let mut divisible_by_all_numbers_eh: bool = true;
 
-    for x in 1..21 {
+    for x in 2..21 {
         if num % x != 0 {
             divisible_by_all_numbers_eh = false;
             break;

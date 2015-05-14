@@ -1,4 +1,6 @@
 Working through the Euler problems in Rust
 ---
 
-starting with #4, because you know, 4 first.
+Rule 3: In Progress
+Rule 4: Completed
+Rule 5: Completed
