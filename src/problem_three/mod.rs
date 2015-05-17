@@ -18,21 +18,14 @@ fn is_prime(n: u32) -> bool {
 
 fn prime_factors(num: u32) -> Vec<u32> {
     let mut factors: Vec<u32> = vec![];
-
-    if num == 0 {
-        return factors;
-    }
-
-    if num == 2 {
-        return vec![2];
-    }
-
     let mut counter: u32 = 1;
-    let mut remainder: u32;
+
+    if num == 0 { return factors; }
+    if num == 2 { return vec![2]; }
 
     loop {
         if counter == num { break }
-        remainder = num % counter;
+        let remainder = num % counter;
 
         if remainder == 0 {
             factors.push(counter);
