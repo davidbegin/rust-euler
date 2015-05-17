@@ -44,17 +44,9 @@ fn prime_factors(num: u32) -> Vec<u32> {
         counter += 1;
     }
 
-    let mut uniq_factors: Vec<u32> = vec![];
-
-    for factor in factors {
-        if !uniq_factors.contains(&factor) {
-            uniq_factors.push(factor);
-        }
-    }
-
     let mut prime_factors: Vec<u32> = vec![];
 
-    for factor in uniq_factors {
+    for factor in factors {
         if is_prime(factor) {
             prime_factors.push(factor);
         }
