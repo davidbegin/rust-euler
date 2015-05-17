@@ -90,10 +90,10 @@ mod tests {
         assert_eq!(prime_factors(2), vec![2]);
     }
 
-    // #[test]
-    // fn there_are_no_prime_factors_of_zero() {
-    //     assert_eq!(prime_factors(0), vec![]);
-    // }
+    #[test]
+    fn there_are_no_prime_factors_of_zero() {
+        assert_eq!(prime_factors(0), vec![]);
+    }
 
     #[test]
     fn we_have_to_start_somewhere() {
