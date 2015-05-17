@@ -1,30 +1,28 @@
+#![feature(step_by)]
+
 // Rule 3
 // The prime factors of 13195 are 5, 7, 13 and 29.
 // What is the largest prime factor of the number 600851475143 ?
 
 pub fn result() {
     println!("\nProblem 3 coming soon!\n");
-    let result = prime_factors_2(13195);
-
+    let result = prime_factors(13195);
     println!("Result: {:?}", result);
 }
 
-fn prime_factors_2(num: i32) -> Vec<i32> {
-    let mut factors: Vec<i32> = vec![];
-    let mut counter: i32 = 1;
-    let mut remainder: i32 = -1;
+fn prime_factors(num: u64) -> Vec<u64> {
+    let mut factors: Vec<u64> = vec![];
+    let mut counter: u64 = 1;
+    let mut remainder: u64;
 
     loop {
         remainder = num / counter;
-
         if remainder == 0 { break }
-
         factors.push(remainder);
-
         counter += 1;
     }
 
-    let mut uniq_factors: Vec<i32> = vec![];
+    let mut uniq_factors: Vec<u64> = vec![];
 
     for factor in factors {
         if !uniq_factors.contains(&factor) {
@@ -32,7 +30,7 @@ fn prime_factors_2(num: i32) -> Vec<i32> {
         }
     }
 
-    let mut prime_factors: Vec<i32> = vec![];
+    let mut prime_factors: Vec<u64> = vec![];
 
     for factor in uniq_factors {
         if prime_eh(factor) {
@@ -43,50 +41,34 @@ fn prime_factors_2(num: i32) -> Vec<i32> {
     prime_factors
 }
 
-fn prime_factors(num: i32) -> Vec<i32> {
-    let mut prime_factors: Vec<i32> = vec![];
-    if num == 0 { return prime_factors; }
-
-    let even_eh: bool = if num % 2 == 0 {
-        prime_factors.push(2);
-        true
-    } else {
-        false
-    };
-
-    if num != 2 {
-        let remainder = num / 2;
-        if remainder != 2 {
-            prime_factors.push(remainder);
-        }
-    }
-    prime_factors
-}
-
-fn all_factors(number_to_find_primes_of: i32) -> Vec<i32> {
+fn all_factors(number_to_find_primes_of: u64) -> Vec<u64> {
     vec![1, 5, 7, 13, 29, 35, 65, 91, 145, 203, 377, 455, 1015, 1885, 2639, 13195]
 }
 
-fn prime_eh(num: i32) -> bool {
-    match num {
-        7 | 29  => true,
-        9 | 100 => false,
-        _       => false
-    }
+fn prime_eh(n: u64) -> bool {
+    if n == 2 { return true; }
+    if n < 3 { return false; }
+    let sqrt_limit = (n as f64).sqrt() as u64;
+    (3..sqrt_limit+1).step_by(2).find(|i| n % i == 0).is_none()
 }
-
 
 #[cfg(test)]
 mod tests {
     use super::prime_factors;
-    use super::prime_factors_2;
     use super::prime_eh;
     use super::all_factors;
 
     #[test]
-    fn six_has_some_prime_factors() {
-        assert_eq!(prime_factors_2(6), vec![2, 3]);
+    fn prime_eh_is_up() {
+        assert_eq!(prime_eh(7), true);
+        assert_eq!(prime_eh(9), false);
+        assert_eq!(prime_eh(11), true);
     }
+
+    // #[test]
+    // fn six_has_some_prime_factors() {
+    //     assert_eq!(prime_factors(6), vec![2, 3]);
+    // }
 
     #[test]
     fn two_is_only_prime_factor_of_two() {
