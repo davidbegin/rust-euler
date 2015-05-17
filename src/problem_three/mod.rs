@@ -17,8 +17,12 @@ fn prime_factors(num: i32) -> Vec<i32> {
         false
     };
 
-    let remainder = num % 2;
-
+    if num != 2 {
+        let remainder = num / 2;
+        if remainder != 2 {
+            prime_factors.push(remainder);
+        }
+    }
     prime_factors
 }
 
@@ -40,6 +44,11 @@ mod tests {
     use super::prime_factors;
     use super::prime_eh;
     use super::all_factors;
+
+    #[test]
+    fn six_has_some_prime_factors() {
+        assert_eq!(prime_factors(6), vec![2, 3]);
+    }
 
     #[test]
     fn two_is_only_prime_factor_of_two() {
