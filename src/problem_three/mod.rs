@@ -4,6 +4,35 @@
 
 pub fn result() {
     println!("\nProblem 3 coming soon!\n");
+    let result = prime_factors_2(13195);
+
+    println!("Result: {:?}", result);
+}
+
+fn prime_factors_2(num: i32) -> Vec<i32> {
+    let mut prime_factors: Vec<i32> = vec![];
+    let mut counter: i32 = 1;
+    let mut remainder: i32 = -1;
+
+    loop {
+        remainder = num / counter;
+
+        if remainder == 0 { break }
+
+        prime_factors.push(remainder);
+
+        counter += 1;
+    }
+
+    let mut uniq_factors: Vec<i32> = vec![];
+
+    for factor in prime_factors {
+        if !uniq_factors.contains(&factor) {
+            uniq_factors.push(factor);
+        }
+    }
+
+    uniq_factors
 }
 
 fn prime_factors(num: i32) -> Vec<i32> {
@@ -42,12 +71,13 @@ fn prime_eh(num: i32) -> bool {
 #[cfg(test)]
 mod tests {
     use super::prime_factors;
+    use super::prime_factors_2;
     use super::prime_eh;
     use super::all_factors;
 
     #[test]
     fn six_has_some_prime_factors() {
-        assert_eq!(prime_factors(6), vec![2, 3]);
+        assert_eq!(prime_factors_2(6), vec![2, 3]);
     }
 
     #[test]
