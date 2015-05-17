@@ -6,8 +6,20 @@ pub fn result() {
     println!("\nProblem 3 coming soon!\n");
 }
 
-fn prime_factors(number_to_find_primes_of: i32) -> [i32; 4] {
-    [5, 7, 13, 29]
+fn prime_factors(num: i32) -> Vec<i32> {
+    let mut prime_factors: Vec<i32> = vec![];
+    if num == 0 { return prime_factors; }
+
+    let even_eh: bool = if num % 2 == 0 {
+        prime_factors.push(2);
+        true
+    } else {
+        false
+    };
+
+    let remainder = num % 2;
+
+    prime_factors
 }
 
 fn all_factors(number_to_find_primes_of: i32) -> Vec<i32> {
@@ -30,9 +42,24 @@ mod tests {
     use super::all_factors;
 
     #[test]
-    fn we_have_to_start_somewhere() {
-        assert_eq!(prime_factors(13195), [5, 7, 13, 29]);
+    fn two_is_only_prime_factor_of_two() {
+        assert_eq!(prime_factors(4), vec![2]);
     }
+
+    #[test]
+    fn two_is_the_only_prime_factor_of_two() {
+        assert_eq!(prime_factors(2), vec![2]);
+    }
+
+    #[test]
+    fn there_are_no_prime_factors_of_zero() {
+        assert_eq!(prime_factors(0), vec![]);
+    }
+
+    // #[test]
+    // fn we_have_to_start_somewhere() {
+    //     assert_eq!(prime_factors(13195), [5, 7, 13, 29]);
+    // }
 
     #[test]
     fn all_factors_is_a_thing() {
