@@ -10,7 +10,7 @@ pub fn result() {
 }
 
 fn prime_factors_2(num: i32) -> Vec<i32> {
-    let mut prime_factors: Vec<i32> = vec![];
+    let mut factors: Vec<i32> = vec![];
     let mut counter: i32 = 1;
     let mut remainder: i32 = -1;
 
@@ -19,20 +19,28 @@ fn prime_factors_2(num: i32) -> Vec<i32> {
 
         if remainder == 0 { break }
 
-        prime_factors.push(remainder);
+        factors.push(remainder);
 
         counter += 1;
     }
 
     let mut uniq_factors: Vec<i32> = vec![];
 
-    for factor in prime_factors {
+    for factor in factors {
         if !uniq_factors.contains(&factor) {
             uniq_factors.push(factor);
         }
     }
 
-    uniq_factors
+    let mut prime_factors: Vec<i32> = vec![];
+
+    for factor in uniq_factors {
+        if prime_eh(factor) {
+            prime_factors.push(factor);
+        }
+    }
+
+    prime_factors
 }
 
 fn prime_factors(num: i32) -> Vec<i32> {
