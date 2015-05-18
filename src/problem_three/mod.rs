@@ -8,24 +8,24 @@ pub fn result() {
     println!("\nProblem 3 coming soon!\n");
 }
 
-fn is_prime(n: u32) -> bool {
+fn is_prime(n: u64) -> bool {
     if n == 2 { return true; }
     if n < 3 { return false; }
     if n % 2 == 0 { return false; }
-    let sqrt_limit = ((n as f32).sqrt() as u32);
+    let sqrt_limit = ((n as f64).sqrt() as u64);
     (3..sqrt_limit+1).step_by(2).find(|i| n % i == 0).is_none()
 }
 
-fn prime_factors(num: u32) -> Vec<u32> {
-    let mut factors: Vec<u32> = vec![];
-    let mut counter: u32 = 1;
+fn prime_factors(num: u64) -> Vec<u64> {
+    let mut factors: Vec<u64> = vec![];
+    let mut counter: u64 = 1;
 
     if num == 0 { return factors; }
     if num == 2 { return vec![2]; }
 
     loop {
         if counter == num { break }
-        let remainder = num % counter;
+        let remainder: u64 = num % counter;
 
         if remainder == 0 {
             factors.push(counter);
@@ -37,7 +37,7 @@ fn prime_factors(num: u32) -> Vec<u32> {
         counter += 1;
     }
 
-    let mut prime_factors: Vec<u32> = vec![];
+    let mut prime_factors: Vec<u64> = vec![];
 
     for factor in factors {
         if is_prime(factor) {
@@ -48,10 +48,27 @@ fn prime_factors(num: u32) -> Vec<u32> {
     prime_factors
 }
 
+fn largest_prime_factor(num: u64) -> u64 {
+    let mut factors = prime_factors(num);
+    let result = factors.pop();
+    result.unwrap()
+}
+
 #[cfg(test)]
 mod tests {
     use super::prime_factors;
+    use super::largest_prime_factor;
     use super::is_prime;
+
+    // #[test]
+    // fn what_the_heck() {
+    //     assert_eq!(prime_factors(600851475143), vec![71, 839, 1471, 6857]);
+    // }
+
+    // #[test]
+    // fn i_can_actually_solve_euler_3() {
+    //     assert_eq!(largest_prime_factor(600851475143), 6857);
+    // }
 
     #[test]
     fn prime_eh_is_up() {
@@ -83,6 +100,10 @@ mod tests {
     #[test]
     fn we_have_to_start_somewhere() {
         assert_eq!(prime_factors(13195), vec![5, 7, 13, 29]);
+        assert_eq!(prime_factors(494994), vec![2, 3, 82499]);
+        assert_eq!(prime_factors(494994111), vec![3, 131, 1259527]);
+        // assert_eq!(prime_factors(600851475143), vec![2, 3, 82499]);
+        // 71*839*1471*6857
     }
 
     #[test]
