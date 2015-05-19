@@ -17,30 +17,32 @@ fn is_prime(n: u64) -> bool {
 }
 
 fn prime_factors(num: u64) -> Vec<u64> {
+    if num == 0 { return vec![]; }
+    if num == 2 { return vec![2]; }
+
+    find_factors(num).iter()
+        .filter(|&i| is_prime(*i))
+        .map(|i| *i)
+        .collect::<Vec<u64>>()
+}
+
+fn find_factors(num: u64) -> Vec<u64> {
     let mut factors: Vec<u64> = vec![];
     let mut counter: u64 = 1;
-
-    if num == 0 { return factors; }
-    if num == 2 { return vec![2]; }
 
     loop {
         if counter == num { break }
         let remainder: u64 = num % counter;
-
         if remainder == 0 {
             factors.push(counter);
         } else {
             counter += 1;
             continue
         }
-
         counter += 1;
     }
 
-    factors.iter()
-        .filter(|&i| is_prime(*i))
-        .map(|i| *i)
-        .collect::<Vec<u64>>()
+    factors
 }
 
 fn largest_prime_factor(num: u64) -> u64 {
