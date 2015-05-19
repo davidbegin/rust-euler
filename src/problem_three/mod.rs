@@ -98,7 +98,6 @@ mod tests {
         assert_eq!(prime_factors(494994), vec![2, 3, 82499]);
         assert_eq!(prime_factors(494994111), vec![3, 131, 1259527]);
         // assert_eq!(prime_factors(600851475143), vec![2, 3, 82499]);
-        // 71*839*1471*6857
     }
 
     #[test]
