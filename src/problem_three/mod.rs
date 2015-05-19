@@ -37,15 +37,10 @@ fn prime_factors(num: u64) -> Vec<u64> {
         counter += 1;
     }
 
-    let mut prime_factors: Vec<u64> = vec![];
-
-    for factor in factors {
-        if is_prime(factor) {
-            prime_factors.push(factor);
-        }
-    }
-
-    prime_factors
+    factors.iter()
+        .filter(|&i| is_prime(*i))
+        .map(|i| *i)
+        .collect::<Vec<u64>>()
 }
 
 fn largest_prime_factor(num: u64) -> u64 {
