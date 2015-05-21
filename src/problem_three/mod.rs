@@ -109,21 +109,19 @@ fn everything_in_one_kind_of(num: u64) -> Vec<u64> {
     if num == 0 { return vec![]; }
     if num == 2 { return vec![2]; }
 
-    (1..num).filter(|i| {
+    (2..num).filter(|i| {
         is_prime_factor(num, i)
     }).collect::<Vec<_>>()
 }
 
 fn is_prime_factor(num: u64, index: &u64) -> bool {
-    if num % index == 0 {
-        return false
-    }
-
-    if num == 2 { return true; }
-    if num < 3 { return false; }
     if num % 2 == 0 { return false; }
-    let sqrt_limit = (num as f64).sqrt() as u64;
-    (3..sqrt_limit+1).step_by(2).find(|i| num % i == 0).is_none()
+    if num % index != 0 { return false; }
+    if num < 3 { return false; }
+    true
+
+    // let sqrt_limit = (num as f64).sqrt() as u64;
+    // (3..sqrt_limit+1).step_by(2).find(|i| num % i == 0).is_none()
 }
 
 #[cfg(test)]
@@ -232,10 +230,12 @@ mod tests {
         assert!(!is_prime(100));
     }
 
-    // #[test]
-    // fn what_the_heck() {
-    //     assert_eq!(prime_factors(600851475143), vec![71, 839, 1471, 6857]);
-    // }
+    #[test]
+    fn what_the_heck() {
+        // assert_eq!(prime_factors(600851475143), vec![71, 839, 1471, 6857]);
+        // assert_eq!(everything_in_one_kind_of(600851475143), vec![71, 839, 1471, 6857]);
+        assert_eq!(everything_in_one_kind_of(1475143), vec![29, 50867]);
+    }
 
     // #[test]
     // fn i_can_actually_solve_euler_3() {
