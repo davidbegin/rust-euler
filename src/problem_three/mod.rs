@@ -13,6 +13,47 @@ pub fn result() {
     println!("\nProblem 3 coming soon!\n");
 }
 
+fn find_factors(num: u64) -> Vec<u64> {
+    let mut factors: Vec<u64> = vec![];
+    let mut counter: u64 = 1;
+
+    loop {
+        if counter == num { break }
+        let remainder: u64 = num % counter;
+        if remainder == 0 {
+            factors.push(counter);
+        } else {
+            counter += 1;
+            continue
+        }
+        counter += 1;
+    }
+
+    factors
+}
+
+fn find_factors_2(num: u64) -> Vec<u64> {
+    let mut factors: Vec<u64> = vec![];
+
+    for counter in 1..num {
+        let remainder: u64 = num % counter;
+        if remainder == 0 {
+            factors.push(counter);
+        } else {
+            continue
+        }
+    }
+
+    factors
+}
+
+
+fn largest_prime_factor(num: u64) -> u64 {
+    let mut factors = prime_factors(num);
+    let result = factors.pop();
+    result.unwrap()
+}
+
 fn is_prime(n: u64) -> bool {
     if n == 2 { return true; }
     if n < 3 { return false; }
@@ -41,39 +82,32 @@ fn prime_factors_1(num: u64) -> Vec<u64> {
         .collect::<Vec<u64>>()
 }
 
-fn find_factors(num: u64) -> Vec<u64> {
-    let mut factors: Vec<u64> = vec![];
-    let mut counter: u64 = 1;
+fn prime_factors_2(num: u64) -> Vec<u64> {
+    if num == 0 { return vec![]; }
+    if num == 2 { return vec![2]; }
 
-    loop {
-        if counter == num { break }
-        let remainder: u64 = num % counter;
-        if remainder == 0 {
-            factors.push(counter);
-        } else {
-            counter += 1;
-            continue
-        }
-        counter += 1;
-    }
-
-    factors
-}
-
-fn largest_prime_factor(num: u64) -> u64 {
-    let mut factors = prime_factors(num);
-    let result = factors.pop();
-    result.unwrap()
+    find_factors_2(num).iter()
+        .filter(|&i| is_prime(*i))
+        .map(|&i| i)
+        .collect::<Vec<u64>>()
 }
 
 #[cfg(test)]
 mod tests {
     use super::prime_factors;
     use super::prime_factors_1;
+    use super::prime_factors_2;
     use super::largest_prime_factor;
     use super::is_prime;
     use problem_three::test::Bencher;
     use super::*;
+
+    #[bench]
+    fn bench_prime_factors_optimization_attempt_2(b: &mut Bencher) {
+        b.iter(|| {
+            prime_factors_2(6)
+        });
+    }
 
     #[bench]
     fn bench_prime_factors_optimization_attempt_1(b: &mut Bencher) {
@@ -81,6 +115,7 @@ mod tests {
             prime_factors_1(6)
         });
     }
+
     #[bench]
     fn bench_prime_factors(b: &mut Bencher) {
         b.iter(|| {
