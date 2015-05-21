@@ -95,8 +95,40 @@ fn prime_factors_2(num: u64) -> Vec<u64> {
         .collect::<Vec<u64>>()
 }
 
+fn prime_factors_3(num: u64) -> Vec<u64> {
+    if num == 0 { return vec![]; }
+    if num == 2 { return vec![2]; }
+
+    find_factors_3(num).iter()
+        .filter(|&i| is_prime(*i))
+        .map(|&i| i)
+        .collect::<Vec<u64>>()
+}
+
+fn everything_in_one_kind_of(num: u64) -> Vec<u64> {
+    if num == 0 { return vec![]; }
+    if num == 2 { return vec![2]; }
+
+    (1..num).filter(|i| {
+        is_prime_factor(num, i)
+    }).collect::<Vec<_>>()
+}
+
+fn is_prime_factor(num: u64, index: &u64) -> bool {
+    if num % index == 0 {
+        return false
+    }
+
+    if num == 2 { return true; }
+    if num < 3 { return false; }
+    if num % 2 == 0 { return false; }
+    let sqrt_limit = (num as f64).sqrt() as u64;
+    (3..sqrt_limit+1).step_by(2).find(|i| num % i == 0).is_none()
+}
+
 #[cfg(test)]
 mod tests {
+    use super::everything_in_one_kind_of;
     use super::prime_factors;
     use super::prime_factors_1;
     use super::prime_factors_2;
@@ -107,6 +139,13 @@ mod tests {
     use super::is_prime;
     use problem_three::test::Bencher;
     use super::*;
+
+    #[bench]
+    fn bench_everything_in_one_kind_of_method(b: &mut Bencher) {
+        b.iter(|| {
+            everything_in_one_kind_of(999)
+        });
+    }
 
     #[bench]
     fn bench_prime_find_factors(b: &mut Bencher) {
@@ -129,21 +168,21 @@ mod tests {
         });
     }
 
-    // #[bench]
+    #[bench]
     fn bench_prime_factors_optimization_attempt_2(b: &mut Bencher) {
         b.iter(|| {
             prime_factors_2(12)
         });
     }
 
-    // #[bench]
+    #[bench]
     fn bench_prime_factors_optimization_attempt_1(b: &mut Bencher) {
         b.iter(|| {
             prime_factors_1(12)
         });
     }
 
-    // #[bench]
+    #[bench]
     fn bench_prime_factors(b: &mut Bencher) {
         b.iter(|| {
             prime_factors(6)
