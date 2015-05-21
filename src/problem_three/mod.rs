@@ -31,6 +31,16 @@ fn prime_factors(num: u64) -> Vec<u64> {
         .collect::<Vec<u64>>()
 }
 
+fn prime_factors_1(num: u64) -> Vec<u64> {
+    if num == 0 { return vec![]; }
+    if num == 2 { return vec![2]; }
+
+    find_factors(num).iter()
+        .filter(|&i| is_prime(*i))
+        .map(|&i| i)
+        .collect::<Vec<u64>>()
+}
+
 fn find_factors(num: u64) -> Vec<u64> {
     let mut factors: Vec<u64> = vec![];
     let mut counter: u64 = 1;
@@ -59,11 +69,18 @@ fn largest_prime_factor(num: u64) -> u64 {
 #[cfg(test)]
 mod tests {
     use super::prime_factors;
+    use super::prime_factors_1;
     use super::largest_prime_factor;
     use super::is_prime;
     use problem_three::test::Bencher;
     use super::*;
 
+    #[bench]
+    fn bench_prime_factors_optimization_attempt_1(b: &mut Bencher) {
+        b.iter(|| {
+            prime_factors_1(6)
+        });
+    }
     #[bench]
     fn bench_prime_factors(b: &mut Bencher) {
         b.iter(|| {
