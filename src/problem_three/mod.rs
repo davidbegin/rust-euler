@@ -1,8 +1,13 @@
-#![feature(step_by)]
-
 // Rule 3
 // The prime factors of 13195 are 5, 7, 13 and 29.
 // What is the largest prime factor of the number 600851475143 ?
+
+#![feature(test)]
+extern crate test;
+
+pub fn add_two(a: i32) -> i32 {
+    a + 2
+}
 
 pub fn result() {
     println!("\nProblem 3 coming soon!\n");
@@ -12,7 +17,7 @@ fn is_prime(n: u64) -> bool {
     if n == 2 { return true; }
     if n < 3 { return false; }
     if n % 2 == 0 { return false; }
-    let sqrt_limit = ((n as f64).sqrt() as u64);
+    let sqrt_limit = (n as f64).sqrt() as u64;
     (3..sqrt_limit+1).step_by(2).find(|i| n % i == 0).is_none()
 }
 
@@ -56,16 +61,15 @@ mod tests {
     use super::prime_factors;
     use super::largest_prime_factor;
     use super::is_prime;
+    use problem_three::test::Bencher;
+    use super::*;
 
-    // #[test]
-    // fn what_the_heck() {
-    //     assert_eq!(prime_factors(600851475143), vec![71, 839, 1471, 6857]);
-    // }
-
-    // #[test]
-    // fn i_can_actually_solve_euler_3() {
-    //     assert_eq!(largest_prime_factor(600851475143), 6857);
-    // }
+    #[bench]
+    fn bench_prime_factors(b: &mut Bencher) {
+        b.iter(|| {
+            prime_factors(6)
+        });
+    }
 
     #[test]
     fn prime_eh_is_up() {
@@ -109,4 +113,15 @@ mod tests {
         assert!(!is_prime(9));
         assert!(!is_prime(100));
     }
+
+    // #[test]
+    // fn what_the_heck() {
+    //     assert_eq!(prime_factors(600851475143), vec![71, 839, 1471, 6857]);
+    // }
+
+    // #[test]
+    // fn i_can_actually_solve_euler_3() {
+    //     assert_eq!(largest_prime_factor(600851475143), 6857);
+    // }
+
 }

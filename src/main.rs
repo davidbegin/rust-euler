@@ -1,7 +1,6 @@
+#![feature(test)]
 #![feature(step_by)]
-#![allow(dead_code)]
-#![allow(unused_variables)]
-#![allow(unused_imports)]
+#![allow(dead_code, unused_variables, unused_imports, unused_attributes)]
 
 extern crate type_printer;
 pub mod problem_three;
