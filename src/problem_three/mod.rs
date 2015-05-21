@@ -47,6 +47,9 @@ fn find_factors_2(num: u64) -> Vec<u64> {
     factors
 }
 
+fn find_factors_3(num: u64) -> Vec<u64> {
+    (1..num).filter(|&i|  num % i == 0).collect::<Vec<_>>()
+}
 
 fn largest_prime_factor(num: u64) -> u64 {
     let mut factors = prime_factors(num);
@@ -97,26 +100,50 @@ mod tests {
     use super::prime_factors;
     use super::prime_factors_1;
     use super::prime_factors_2;
+    use super::find_factors;
+    use super::find_factors_2;
+    use super::find_factors_3;
     use super::largest_prime_factor;
     use super::is_prime;
     use problem_three::test::Bencher;
     use super::*;
 
     #[bench]
+    fn bench_prime_find_factors(b: &mut Bencher) {
+        b.iter(|| {
+            find_factors(999)
+        });
+    }
+
+    #[bench]
+    fn bench_prime_find_factors_optimization_1(b: &mut Bencher) {
+        b.iter(|| {
+            find_factors_2(999)
+        });
+    }
+
+    #[bench]
+    fn bench_prime_find_factors_optimization_2(b: &mut Bencher) {
+        b.iter(|| {
+            find_factors_3(999)
+        });
+    }
+
+    // #[bench]
     fn bench_prime_factors_optimization_attempt_2(b: &mut Bencher) {
         b.iter(|| {
-            prime_factors_2(6)
+            prime_factors_2(12)
         });
     }
 
-    #[bench]
+    // #[bench]
     fn bench_prime_factors_optimization_attempt_1(b: &mut Bencher) {
         b.iter(|| {
-            prime_factors_1(6)
+            prime_factors_1(12)
         });
     }
 
-    #[bench]
+    // #[bench]
     fn bench_prime_factors(b: &mut Bencher) {
         b.iter(|| {
             prime_factors(6)
