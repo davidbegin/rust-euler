@@ -7,7 +7,7 @@
 
 pub fn result() {
     println!("\n(a very slow) Problem 5!\n");
-    println!("smalled for 1 to 20: {}", smallest_num_finder());
+    println!("smallest factor for 1 to 20: {}", smallest_num_finder());
 }
 
 fn smallest_num_finder() -> i32 {
