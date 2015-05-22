@@ -27,11 +27,11 @@ fn exploration_of_marked_num_struct() {
 fn return_a_sieve_2(vec_to_be_filtered: Vec<NumberThatCanBeMarked>) -> Vec<NumberThatCanBeMarked> {
     let limit: i32 = 121;
 
-    let prime_option = vec_to_be_filtered.iter().find(|i| i.marked );
+    let prime_option = vec_to_be_filtered.iter().find(|i| !i.marked );
 
     let prime = match prime_option {
         Some(x) => x.number,
-        None => 0,
+        None => 2,
     };
 
     let should_we_continue = match prime_option {
@@ -58,11 +58,13 @@ fn return_a_sieve_2(vec_to_be_filtered: Vec<NumberThatCanBeMarked>) -> Vec<Numbe
         }
     });
 
-    println!("printing filtered list: {:?}", filtered_list.map(|i| {
-        i.marked
-    }).collect::<Vec<_>>());
+    filtered_list.collect::<Vec<_>>()
 
-    vec![(NumberThatCanBeMarked { marked: true, number: 2})]
+    // println!("printing filtered list: {:?}", filtered_list.map(|i| {
+    //     i.marked
+    // }).collect::<Vec<_>>());
+    //
+    // vec![(NumberThatCanBeMarked { marked: true, number: 2})]
 }
 
 fn example_1() {
