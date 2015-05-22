@@ -1,25 +1,6 @@
 extern crate type_printer;
 
 pub fn whose_got_the_primes() {
-    println!("\n\tI need to learn more about primes.");
-    println!("\n\t...and numbers in general, as my math skills are severly lacking.");
-    println!("\n\t-----------------------------------------------------------------");
-
-    println!("\t
-        Things I want to learn:
-
-        different ways of checking primality and how to implement them in rust
-
-        also I want to make the sieve of eratosthenes thing
-        ...it just sounds cool
-    ");
-
-    // First let me have fun with sieve of eratosthenes thang
-    //
-    // I'd also like to maybe animate it,
-    // although that's probably beyond my skills
-
-
     // example_1();
     exploration_of_marked_num_struct();
 }
@@ -39,13 +20,26 @@ fn exploration_of_marked_num_struct() {
 
     let lets_see = return_a_sieve_2(range.collect::<_>());
 
-    // let printable_range = range.map(|i| i.marked).collect::<Vec<bool>>();
-    // println!("range {:?}", printable_range);
+    let printable_range = lets_see.iter().map(|i| i.marked).collect::<Vec<bool>>();
+    println!("range {:?}", printable_range);
 }
 
 fn return_a_sieve_2(vec_to_be_filtered: Vec<NumberThatCanBeMarked>) -> Vec<NumberThatCanBeMarked> {
     let limit: i32 = 121;
-    let prime: i32 = vec_to_be_filtered[0].number.clone();
+
+    let prime_option = vec_to_be_filtered.iter().find(|i| i.marked );
+
+    let prime = match prime_option {
+        Some(x) => x.number,
+        None => 0,
+    };
+
+    let should_we_continue = match prime_option {
+        Some(_) => true,
+        None => false,
+    };
+
+    if !should_we_continue { return vec![NumberThatCanBeMarked { marked: true, number: 0 }] }
 
     let non_primes_to_delete = (prime..limit).step_by(prime).collect::<Vec<i32>>();
 
@@ -115,4 +109,24 @@ fn messy_notes() {
     // Find the first number greater than p in the list that is not marked.
     // If there was no such number, stop. Otherwise,
     // let p now equal this new number (which is the next prime), and repeat from step 3.
+}
+
+fn old_rambling_title() {
+    println!("\n\tI need to learn more about primes.");
+    println!("\n\t...and numbers in general, as my math skills are severly lacking.");
+    println!("\n\t-----------------------------------------------------------------");
+
+    println!("\t
+        Things I want to learn:
+
+        different ways of checking primality and how to implement them in rust
+
+        also I want to make the sieve of eratosthenes thing
+        ...it just sounds cool
+    ");
+
+    // First let me have fun with sieve of eratosthenes thang
+    //
+    // I'd also like to maybe animate it,
+    // although that's probably beyond my skills
 }
