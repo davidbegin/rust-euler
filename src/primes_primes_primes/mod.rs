@@ -29,10 +29,13 @@ struct NumberThatCanBeMarked {
 }
 
 fn exploration_of_marked_num_struct() {
-    let durr = NumberThatCanBeMarked { marked: false };
-    let range: Vec<NumberThatCanBeMarked> = vec![durr];
+    // let me create a bigger vec of these wacky NumberThatCanBeMarked structs
 
-    println!("range {:?}", range.iter().map(|i| i.marked).collect::<Vec<bool>>());
+    let range = (2..121).map(|i| {
+        NumberThatCanBeMarked { marked: false }
+    }).map(|i| i.marked).collect::<Vec<bool>>();
+
+    println!("range {:?}", range);
 }
 
 fn example_1() {
