@@ -25,17 +25,50 @@ pub fn whose_got_the_primes() {
 }
 
 struct NumberThatCanBeMarked {
-    marked: bool
+    number: i32,
+    marked: bool,
 }
 
 fn exploration_of_marked_num_struct() {
-    // let me create a bigger vec of these wacky NumberThatCanBeMarked structs
-
     let range = (2..121).map(|i| {
-        NumberThatCanBeMarked { marked: false }
-    }).map(|i| i.marked).collect::<Vec<bool>>();
+        NumberThatCanBeMarked {
+            number: i,
+            marked: false,
+        }
+    });
 
-    println!("range {:?}", range);
+    let lets_see = return_a_sieve_2(range.collect::<_>());
+
+    // let printable_range = range.map(|i| i.marked).collect::<Vec<bool>>();
+    // println!("range {:?}", printable_range);
+}
+
+fn return_a_sieve_2(vec_to_be_filtered: Vec<NumberThatCanBeMarked>) -> Vec<NumberThatCanBeMarked> {
+    let limit: i32 = 121;
+    let prime: i32 = vec_to_be_filtered[0].number.clone();
+
+    let non_primes_to_delete = (prime..limit).step_by(prime).collect::<Vec<i32>>();
+
+    let filtered_list = vec_to_be_filtered.iter().map(|i| {
+        let should_we_mark_it = match non_primes_to_delete.iter().find(|&x| {
+            *x == i.number
+        }) {
+            Some(_) => false,
+            None => true
+        };
+
+        if should_we_mark_it {
+            NumberThatCanBeMarked { marked: true, number: i.number.clone() }
+        } else {
+            NumberThatCanBeMarked { marked: false, number: i.number.clone() }
+        }
+    });
+
+    println!("printing filtered list: {:?}", filtered_list.map(|i| {
+        i.marked
+    }).collect::<Vec<_>>());
+
+    vec![(NumberThatCanBeMarked { marked: true, number: 2})]
 }
 
 fn example_1() {
