@@ -2,12 +2,29 @@ extern crate type_printer;
 
 pub fn whose_got_the_primes() {
     // example_1();
-    exploration_of_marked_num_struct();
+    // exploration_of_marked_num_struct();
+    attempt_2();
 }
 
 struct NumberThatCanBeMarked {
     number: i32,
     marked: bool,
+}
+
+fn attempt_2() {
+    let range = (2..121).map(|i| {
+        NumberThatCanBeMarked {
+            number: i,
+            marked: false,
+        }
+    });
+
+    // I need to start storing the primes!
+    let first_iter = return_a_sieve_2(range.collect::<_>());
+    let second_iter = return_a_sieve_2(first_iter);
+    let third_iter = return_a_sieve_2(second_iter);
+
+    println!("{:?}", third_iter.iter().map(|i| { (i.number, i.marked) } ).collect::<Vec<_>>());
 }
 
 fn exploration_of_marked_num_struct() {
@@ -33,6 +50,8 @@ fn return_a_sieve_2(vec_to_be_filtered: Vec<NumberThatCanBeMarked>) -> Vec<Numbe
         Some(x) => x.number,
         None => 2,
     };
+
+    println!("HERE IS THE THE PRIME: {}", prime.clone());
 
     let should_we_continue = match prime_option {
         Some(_) => true,
