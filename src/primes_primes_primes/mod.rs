@@ -20,6 +20,9 @@ fn attempt_2() {
     });
 
     // I need to start storing the primes!
+
+    // this now needs to return a tuple, with the prime it used also
+    // which I can add and pass back a vec back in
     let first_iter = return_a_sieve_2(range.collect::<_>());
     let second_iter = return_a_sieve_2(first_iter);
     let third_iter = return_a_sieve_2(second_iter);
