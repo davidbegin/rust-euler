@@ -10,9 +10,14 @@ pub fn attempt_1() {
         }
     });
 
-    let (marked_numbers, found_primes) = sieve(range.collect::<Vec<Number>>(), vec![]);
-
-    println!("found primes for iter 1: {:?}", found_primes);
+    let (marked_numbers_1, found_primes_1) = sieve(range.collect::<Vec<Number>>(), vec![]);
+    println!("found primes for iter 1: {:?}", found_primes_1);
+    let (marked_numbers_2, found_primes_2) = sieve(marked_numbers_1, found_primes_1);
+    println!("found primes for iter 1: {:?}", found_primes_2);
+    let (marked_numbers_3, found_primes_3) = sieve(marked_numbers_2, found_primes_2);
+    println!("found primes for iter 3: {:?}", found_primes_3);
+    let (marked_numbers_4, found_primes_4) = sieve(marked_numbers_3, found_primes_3);
+    println!("found primes for iter 4: {:?}", found_primes_4);
 }
 
 struct Number {
@@ -51,13 +56,14 @@ fn sieve(sieve_to_filter: Vec<Number>, found_primes: Vec<i32>) -> (Vec<Number>, 
 
     let filtered_sieve = sieve_to_filter.iter().map(|i| {
         let should_we_mark_it = match non_primes_to_delete.iter().find(|&x| {
-            *x == i.number
+            *x == i.number || i.marked
         }) {
-            Some(_) => false,
-            None => true
+            Some(_) => true,
+            None => false
         };
 
         if should_we_mark_it {
+            // println!("marking: {}", i.number.clone());
             Number { marked: true, number: i.number.clone() }
         } else {
             Number { marked: false, number: i.number.clone() }
