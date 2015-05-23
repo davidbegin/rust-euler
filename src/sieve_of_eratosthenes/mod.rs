@@ -11,13 +11,7 @@ pub fn attempt_1() {
     });
 
     let (marked_numbers_1, found_primes_1) = sieve(range.collect::<Vec<Number>>(), vec![]);
-    println!("found primes for iter 1: {:?}", found_primes_1);
-    let (marked_numbers_2, found_primes_2) = sieve(marked_numbers_1, found_primes_1);
-    println!("found primes for iter 1: {:?}", found_primes_2);
-    let (marked_numbers_3, found_primes_3) = sieve(marked_numbers_2, found_primes_2);
-    println!("found primes for iter 3: {:?}", found_primes_3);
-    let (marked_numbers_4, found_primes_4) = sieve(marked_numbers_3, found_primes_3);
-    println!("found primes for iter 4: {:?}", found_primes_4);
+    println!("Check of this Sieve in action!: {:?}", found_primes_1);
 }
 
 struct Number {
@@ -43,50 +37,41 @@ fn sieve(sieve_to_filter: Vec<Number>, found_primes: Vec<i32>) -> (Vec<Number>, 
 
         let prime = match prime_option {
             Some(x) => x.number,
-            None => 2,
+            None => {
+                let filtered_sieve = sieve_to_filter.iter().map(|i| {
+                    if i.marked {
+                        Number { marked: true, number: i.number.clone() }
+                    } else {
+                        Number { marked: false, number: i.number.clone() }
+                    }
+                });
+
+                return (filtered_sieve.collect::<Vec<_>>() , new_found_primes)
+            }
         };
 
         prime_for_numbers_to_delete_list = prime.clone();
         new_found_primes.push(prime.clone());
+
+        let non_primes_to_delete = (prime_for_numbers_to_delete_list..limit)
+            .step_by(prime_for_numbers_to_delete_list)
+            .collect::<Vec<i32>>();
+
+        let filtered_sieve = sieve_to_filter.iter().map(|i| {
+            let should_we_mark_it = match non_primes_to_delete.iter().find(|&x| {
+                *x == i.number || i.marked
+            }) {
+                Some(_) => true,
+                None => false
+            };
+
+            if should_we_mark_it {
+                Number { marked: true, number: i.number.clone() }
+            } else {
+                Number { marked: false, number: i.number.clone() }
+            }
+        });
+
+        sieve(filtered_sieve.collect::<Vec<_>>(), new_found_primes)
     }
-
-    let non_primes_to_delete = (prime_for_numbers_to_delete_list..limit)
-        .step_by(prime_for_numbers_to_delete_list)
-        .collect::<Vec<i32>>();
-
-    let filtered_sieve = sieve_to_filter.iter().map(|i| {
-        let should_we_mark_it = match non_primes_to_delete.iter().find(|&x| {
-            *x == i.number || i.marked
-        }) {
-            Some(_) => true,
-            None => false
-        };
-
-        if should_we_mark_it {
-            // println!("marking: {}", i.number.clone());
-            Number { marked: true, number: i.number.clone() }
-        } else {
-            Number { marked: false, number: i.number.clone() }
-        }
-    });
-
-    (filtered_sieve.collect::<Vec<_>>() , new_found_primes)
 }
-
-
-
-    // let should_we_continue = match prime_option {
-    //     Some(_) => true,
-    //     None => false,
-    // };
-    //
-    // if !should_we_continue {
-    //     println!("\n\t
-    //          ...breaking because we did not find any unmarked number
-    //          that wasn't already in the list of primes\n
-    //     ");
-    //
-    //     // return (vec![Number { number: 2, marked: false }], vec![2])
-    //     return (vec![Number { number: 2, marked: false }], new_found_primes);
-    //     // return (sieve_to_filter, new_found_primes);
-    // }
