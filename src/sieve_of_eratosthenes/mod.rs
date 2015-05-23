@@ -3,7 +3,7 @@ pub fn attempt_1() {
     println!("\nSieve Of Eratosthenes");
     println!("=====================\n");
 
-    let range = (2..121).map(|i| {
+    let range = (2..210).map(|i| {
         Number {
             number: i,
             marked: false,
@@ -11,7 +11,6 @@ pub fn attempt_1() {
     });
 
     let (marked_numbers_1, found_primes_1) = sieve(range.collect::<Vec<Number>>(), vec![]);
-    println!("Check of this Sieve in action!: {:?}", found_primes_1);
 }
 
 struct Number {
@@ -20,7 +19,7 @@ struct Number {
 }
 
 fn sieve(sieve_to_filter: Vec<Number>, found_primes: Vec<i32>) -> (Vec<Number>, Vec<i32>) {
-    let limit: i32 = 121;
+    let limit: i32 = 210;
     let mut new_found_primes: Vec<i32> = found_primes.clone();
     let mut prime_for_numbers_to_delete_list: i32;
 
@@ -57,6 +56,9 @@ fn sieve(sieve_to_filter: Vec<Number>, found_primes: Vec<i32>) -> (Vec<Number>, 
             .step_by(prime_for_numbers_to_delete_list)
             .collect::<Vec<i32>>();
 
+        let mut counter: i32 = 1;
+        print!(" 0 ");
+
         let filtered_sieve = sieve_to_filter.iter().map(|i| {
             let should_we_mark_it = match non_primes_to_delete.iter().find(|&x| {
                 *x == i.number || i.marked
@@ -65,13 +67,23 @@ fn sieve(sieve_to_filter: Vec<Number>, found_primes: Vec<i32>) -> (Vec<Number>, 
                 None => false
             };
 
+            if counter == 10 {
+                println!("\n");
+                counter = 1;
+            } else {
+                counter += 1
+            }
+
             if should_we_mark_it {
+                print!(" X ");
                 Number { marked: true, number: i.number.clone() }
             } else {
+                print!(" O ");
                 Number { marked: false, number: i.number.clone() }
             }
         });
 
+        // (filtered_sieve.collect::<Vec<_>>(), new_found_primes)
         sieve(filtered_sieve.collect::<Vec<_>>(), new_found_primes)
     }
 }
