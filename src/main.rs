@@ -10,7 +10,7 @@ mod primes_primes_primes;
 mod sieve_of_eratosthenes;
 
 fn main() {
-    sieve_of_eratosthenes::attempt_1();
+    // sieve_of_eratosthenes::attempt_1();
     // primes_primes_primes::whose_got_the_primes();
     // problem_three::result();
     // problem_four::result();

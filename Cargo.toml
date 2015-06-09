@@ -5,3 +5,4 @@ authors = ["David Begin <davidmichaelbe@gmail.com>"]
 
 [dependencies]
 type_printer = "*"
+primal = "*"

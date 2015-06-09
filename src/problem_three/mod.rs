@@ -4,6 +4,7 @@
 
 #![feature(test)]
 extern crate test;
+extern crate primal;
 
 pub fn add_two(a: i32) -> i32 {
     a + 2
@@ -65,6 +66,10 @@ fn is_prime(n: u64) -> bool {
     (3..sqrt_limit+1).step_by(2).find(|i| n % i == 0).is_none()
 }
 
+fn is_prime_2(n: u64) -> bool {
+  primal::is_prime(n)
+}
+
 fn prime_factors(num: u64) -> Vec<u64> {
     if num == 0 { return vec![]; }
     if num == 2 { return vec![2]; }
@@ -105,6 +110,16 @@ fn prime_factors_3(num: u64) -> Vec<u64> {
         .collect::<Vec<u64>>()
 }
 
+fn prime_factors_4(num: u64) -> Vec<u64> {
+    if num == 0 { return vec![]; }
+    if num == 2 { return vec![2]; }
+
+    find_factors_3(num).iter()
+        .filter(|&i| is_prime_2(*i))
+        .map(|&i| i)
+        .collect::<Vec<u64>>()
+}
+
 fn everything_in_one_kind_of(num: u64) -> Vec<u64> {
     if num == 0 { return vec![]; }
     if num == 2 { return vec![2]; }
@@ -130,11 +145,13 @@ mod tests {
     use super::prime_factors;
     use super::prime_factors_1;
     use super::prime_factors_2;
+    use super::prime_factors_4;
     use super::find_factors;
     use super::find_factors_2;
     use super::find_factors_3;
     use super::largest_prime_factor;
     use super::is_prime;
+    use super::is_prime_2;
     use problem_three::test::Bencher;
     use super::*;
 
@@ -153,21 +170,28 @@ mod tests {
     }
 
     #[bench]
-    fn bench_prime_find_factors_optimization_1(b: &mut Bencher) {
+    fn bench_prime_find_factors_2(b: &mut Bencher) {
         b.iter(|| {
             find_factors_2(999)
         });
     }
 
     #[bench]
-    fn bench_prime_find_factors_optimization_2(b: &mut Bencher) {
+    fn bench_prime_find_factors_3(b: &mut Bencher) {
         b.iter(|| {
             find_factors_3(999)
         });
     }
 
     #[bench]
-    fn bench_prime_factors_optimization_attempt_2(b: &mut Bencher) {
+    fn bench_prime_factors_4(b: &mut Bencher) {
+        b.iter(|| {
+            prime_factors_4(999)
+        });
+    }
+
+    #[bench]
+    fn bench_prime_factors_2(b: &mut Bencher) {
         b.iter(|| {
             prime_factors_2(12)
         });
@@ -185,6 +209,20 @@ mod tests {
         b.iter(|| {
             prime_factors(6)
         });
+    }
+
+    #[bench]
+    fn bench_is_prime(b: &mut Bencher) {
+      b.iter(|| {
+        is_prime(3557)
+      });
+    }
+
+    #[bench]
+    fn bench_is_prime_2(b: &mut Bencher) {
+      b.iter(|| {
+        is_prime_2(3557)
+      });
     }
 
     #[test]
@@ -219,7 +257,7 @@ mod tests {
         assert_eq!(prime_factors(13195), vec![5, 7, 13, 29]);
         assert_eq!(prime_factors(494994), vec![2, 3, 82499]);
         assert_eq!(prime_factors(494994111), vec![3, 131, 1259527]);
-        // assert_eq!(prime_factors(600851475143), vec![2, 3, 82499]);
+        // assert_eq!(prime_factors_4(600851475143), vec![2, 3, 82499]);
     }
 
     #[test]
