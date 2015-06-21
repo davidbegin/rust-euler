@@ -1,7 +1,8 @@
 Working through the Euler problems in Rust
 ---
 
-* Rule 3: In Progress
-* Rule 4: Completed
-* Rule 5: Completed
+* Problem 3: In Progress
+* Problem 4: Completed
+* Problem 5: Completed
+* Problem 6: Completed
 * Also includes Sieve of Eratosthenes

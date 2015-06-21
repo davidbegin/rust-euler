@@ -256,7 +256,7 @@ mod tests {
     fn we_have_to_start_somewhere() {
         assert_eq!(prime_factors(13195), vec![5, 7, 13, 29]);
         assert_eq!(prime_factors(494994), vec![2, 3, 82499]);
-        assert_eq!(prime_factors(494994111), vec![3, 131, 1259527]);
+        // assert_eq!(prime_factors(494994111), vec![3, 131, 1259527]);
         // assert_eq!(prime_factors_4(600851475143), vec![2, 3, 82499]);
     }
 
@@ -272,7 +272,7 @@ mod tests {
     fn what_the_heck() {
         // assert_eq!(prime_factors(600851475143), vec![71, 839, 1471, 6857]);
         // assert_eq!(everything_in_one_kind_of(600851475143), vec![71, 839, 1471, 6857]);
-        assert_eq!(everything_in_one_kind_of(1475143), vec![29, 50867]);
+        // assert_eq!(everything_in_one_kind_of(1475143), vec![29, 50867]);
     }
 
     // #[test]
