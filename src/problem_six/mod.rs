@@ -74,3 +74,23 @@ fn sum_a_range() {
 
   // println!("Check out this range: {:?}", range);
 }
+
+// I would like to benchmark the difference between
+// mutating state and and iterating
+
+pub fn add_two(a: i32) -> i32 {
+    a + 2
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use test::Bencher;
+
+    #[bench]
+    fn bench_add_two(b: &mut Bencher) {
+        let result = b.iter(|| add_two(2));
+        // println!("Result: {:?}", result);
+    }
+}
+

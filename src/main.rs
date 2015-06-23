@@ -2,6 +2,7 @@
 #![feature(step_by)]
 #![allow(dead_code, unused_variables, unused_imports, unused_attributes)]
 
+extern crate test;
 extern crate type_printer;
 mod problem_three;
 mod problem_four;
