@@ -1,3 +1,5 @@
+extern crate type_printer;
+
 // The sum of the squares of the first ten natural numbers is,
 //
 // 1**2 + 2**2 + ... + 10**2 = 385
@@ -15,26 +17,16 @@
 pub fn result() {
     let result = difference(100);
     println!("\nThe to answer to problem 6 is: {}", result);
+    println!("\n===EXPERIMENTS===\n");
+    sum_a_range();
 }
 
 fn squares_of_natural_numbers(upper_limit: i32) -> i32 {
-    let mut result: i32 = 0;
-
-    for num in (1i32..upper_limit + 1i32) {
-        result += num.pow(2);
-    }
-
-    result
+    (1i32..upper_limit + 1i32).fold(0, |acc, x| acc + x.pow(2))
 }
 
 fn square_of_sum_of_natural_numbers(upper_limit: i32) -> i32 {
-    let mut result: i32 = 0;
-
-    for num in 1..(upper_limit + 1) {
-        result += num
-    }
-
-    result.pow(2)
+  (1..(upper_limit + 1)).fold(0, |acc, x| acc + x).pow(2)
 }
 
 fn difference(upper_limit: i32) -> i32 {
@@ -55,4 +47,30 @@ fn test_square_of_sum_of_natural_numbers() {
 #[test]
 fn test_difference_in_sum_squaring() {
     assert_eq!(difference(10), 2640);
+}
+
+// I am continuely engaging is what is what I feel
+// an anti-pattern in ruby, and should DEFINITELY be an
+// anti-pattern for Rust
+
+// which is setting a mutable variable to 0 or a blank array (vec! doh!)
+// and then iterating oversomething mutating it constantly
+
+// I am doing this everywhere and want to learn the rust way
+
+
+// first example, is the sum of every squared value in a range
+
+// lets start with the first thing we need to be able to do
+// sum a range
+
+// attempt to sum a range
+fn sum_a_range() {
+  let range = 0..10;
+  type_printer::print_type_of(&range);
+
+  let result = range.fold(0, |acc, x| acc + x);
+  println!("We just folding this: {}", result);
+
+  // println!("Check out this range: {:?}", range);
 }
