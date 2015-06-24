@@ -19,5 +19,6 @@ fn main() {
     // problem_four::result();
     // problem_five::result();
     // problem_six::result();
-    problem_seven::result();
+    // problem_seven::result();
+    problem_seven::terrible_begin_solution();
 }
