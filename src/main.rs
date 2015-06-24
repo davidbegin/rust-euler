@@ -8,6 +8,7 @@ mod problem_three;
 mod problem_four;
 mod problem_five;
 mod problem_six;
+mod problem_seven;
 mod primes_primes_primes;
 mod sieve_of_eratosthenes;
 
@@ -17,5 +18,6 @@ fn main() {
     // problem_three::result();
     // problem_four::result();
     // problem_five::result();
-    problem_six::result();
+    // problem_six::result();
+    problem_seven::result();
 }
