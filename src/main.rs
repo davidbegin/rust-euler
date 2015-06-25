@@ -1,6 +1,13 @@
 #![feature(test)]
 #![feature(step_by)]
-#![allow(dead_code, unused_variables, unused_imports, unused_attributes)]
+#![allow(
+    dead_code,
+    unused_variables,
+    unused_imports,
+    unused_attributes,
+    path_statements,
+    unused_mut
+)]
 
 extern crate test;
 extern crate type_printer;

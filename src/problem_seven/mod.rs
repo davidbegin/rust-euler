@@ -21,33 +21,60 @@ pub fn result() {
     println!("{}", result);
 }
 
-pub fn terrible_begin_solution() {
-    let mut result = -1;
-    let mut primal_count = 0;
+pub fn terrible_begin_solution() -> usize {
+    let mut result: usize = 0;
+    let mut primal_count  = 0;
+    let mut num: usize    = 1;
 
-    for num in 2..104743 {
-        if primal::is_prime(num) {
-            primal_count += 1
+    loop {
+        if primal::is_prime(num as u64) {
+            primal_count += 1;
+            if primal_count == 10001 {
+                result = num;
+                break
+            }
         }
 
-        if primal_count == 10000 {
-            result = num
-        }
+        num += 1usize;
     }
 
-    println!("Result {}", result);
+    result
 }
 
 
 #[cfg(test)]
 mod tests {
+    use super::terrible_begin_solution;
     use test::Bencher;
     use problem_seven::primal::Primes;
 
-  #[bench]
+    #[test]
+    fn primal_returns_the_correct_solution() {
+        assert_eq!(
+            Primes::all().nth(10001 - 1).unwrap(),
+            104743
+        )
+    }
+
+    #[test]
+    fn begin_solution_is_the_same_as_primal() {
+        assert_eq!(
+            Primes::all().nth(10001 - 1).unwrap(),
+            terrible_begin_solution()
+        )
+    }
+
+    #[bench]
     fn bench_primal_solution(b: &mut Bencher) {
         b.iter(|| {
             Primes::all().nth(10001 - 1).unwrap();
+        });
+    }
+
+    #[bench]
+    fn bench_begin_solution(b: &mut Bencher) {
+        b.iter(|| {
+          terrible_begin_solution();
         });
     }
 }
