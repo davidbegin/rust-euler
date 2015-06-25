@@ -5,6 +5,7 @@
     unused_variables,
     unused_imports,
     unused_attributes,
+    unused_assignments,
     path_statements,
     unused_mut
 )]
@@ -16,6 +17,7 @@ mod problem_four;
 mod problem_five;
 mod problem_six;
 mod problem_seven;
+mod problem_eight;
 mod primes_primes_primes;
 mod sieve_of_eratosthenes;
 
@@ -27,5 +29,6 @@ fn main() {
     // problem_five::result();
     // problem_six::result();
     // problem_seven::result();
-    problem_seven::terrible_begin_solution();
+    // problem_seven::terrible_begin_solution();
+    problem_eight::result();
 }
