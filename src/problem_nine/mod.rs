@@ -94,4 +94,18 @@ fn cogs() {
     // ....or maybe how to find all sets of numbers for pytragreum triangles
     // (yes that is the correct spelling)
 
+    let mut product: i32 = 0;
+
+    for inner in 1..999i32 {
+        for middle  in 1..999i32 {
+            let outer = 1000i32 - inner - middle;
+
+            if inner.pow(2) + middle.pow(2) == outer.pow(2) {
+                product = inner * middle * outer;
+            }
+        }
+    }
+
+    assert_eq!(product, 31875000);
+    println!("Product: {}", product);
 }
