@@ -12,6 +12,7 @@
 
 extern crate test;
 extern crate type_printer;
+mod problem_two;
 mod problem_three;
 mod problem_four;
 mod problem_five;
@@ -26,6 +27,7 @@ mod sieve_of_eratosthenes;
 fn main() {
     // sieve_of_eratosthenes::attempt_1();
     // primes_primes_primes::whose_got_the_primes();
+    problem_two::result();
     // problem_three::result();
     // problem_four::result();
     // problem_five::result();
@@ -34,5 +36,5 @@ fn main() {
     // problem_seven::terrible_begin_solution();
     // problem_eight::result();
     // problem_nine::result();
-    problem_ten::result();
+    // problem_ten::result();
 }
