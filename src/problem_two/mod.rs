@@ -9,6 +9,16 @@
 extern crate type_printer;
 
 pub fn result() {
+  let sum = (1..40)
+    .map(    | num      | fib(num))
+    .filter( | &num     | num < 4000000 && num % 2 == 0)
+    .fold(0, | acc, num | acc + num);
+
+  println!("{}", sum);
+  assert_eq!(sum, 4613732);
+}
+
+pub fn first_attempt_at_result() {
     println!("\nProblem #2 coming soon!\n");
 
     let mut index = 1;
