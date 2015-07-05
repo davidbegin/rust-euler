@@ -1,3 +1,5 @@
+extern crate type_printer;
+
 // Problem #11
 //
 // In the 20×20 grid below, four numbers along a diagonal line have been marked in red.
@@ -60,7 +62,13 @@ fn grid() {
 
   // println!("Grid: {:?}", grid);
   let result = find_horizontal_sums(&grid[0]);
-  println!("{:?}", result);
+  println!("horizontal sums:  {:?}", result);
+
+  // So now I need to find the sums of a vertical row
+  // but first I need to extract a vertical row
+  // so lets try passing the grid to a function and have it return the 1st vertical row
+
+  vertical_row_extractor(&grid);
 }
 
 fn find_horizontal_sums(row: &Vec<i32>) -> Vec<i32> {
@@ -82,14 +90,23 @@ fn find_horizontal_sums(row: &Vec<i32>) -> Vec<i32> {
     if upper_limit > row_len { break }
   }
 
-  println!("\n\n");
-  println!("{:?}", pairs);
-  println!("\n\n");
+  let mut sums: Vec<i32> = vec![];
 
-  // let sums: Vec<i32> = pairs.iter().map(|pair| {
-  //   pair.iter().fold(0, |acc, num| acc + num)
-  // });
+  for pair in pairs {
+    let result = pair.iter().fold(0, |acc, num| acc + num);
+    sums.push(result);
+  }
 
-  vec![08, 02, 22, 97, 38, 15, 00, 40, 00, 75, 04, 05, 07, 78, 52, 12, 50, 77, 91, 08]
-
+  sums
 }
+
+fn vertical_row_extractor(grid: &Vec<Vec<i32>>) {
+    let mut vertical_row: Vec<i32> = vec![];
+
+    for row in grid {
+      vertical_row.push(row[0])
+    }
+
+    println!("vertical row extractor: {:?}", vertical_row);
+}
+
