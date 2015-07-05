@@ -21,13 +21,14 @@ mod problem_seven;
 mod problem_eight;
 mod problem_nine;
 mod problem_ten;
+mod problem_eleven;
 mod primes_primes_primes;
 mod sieve_of_eratosthenes;
 
 fn main() {
     // sieve_of_eratosthenes::attempt_1();
     // primes_primes_primes::whose_got_the_primes();
-    problem_two::result();
+    // problem_two::result();
     // problem_three::result();
     // problem_four::result();
     // problem_five::result();
@@ -37,4 +38,5 @@ fn main() {
     // problem_eight::result();
     // problem_nine::result();
     // problem_ten::result();
+    problem_eleven::result();
 }
