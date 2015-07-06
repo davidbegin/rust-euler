@@ -76,7 +76,14 @@ fn grid() {
     vertical_grid.push(vertical_row);
   }
 
-  // println!("Vertical Grid: {:?}", vertical_grid);
+  let mut vertical_sums: Vec<Vec<i32>> = vec![];
+  for num in 0..grid.len() {
+      let result = find_horizontal_sums(&vertical_grid[num]);
+      vertical_sums.push (result);
+  }
+
+  let highest_vertical_sum = find_highest_in_grid(vertical_sums);
+  println!("Highest Vertical Sum: {}", highest_vertical_sum);
 }
 
 fn find_highest_in_grid(grid: Vec<Vec<i32>>) -> i32 {
