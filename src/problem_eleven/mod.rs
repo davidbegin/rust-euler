@@ -62,13 +62,19 @@ fn grid() {
 
   // println!("Grid: {:?}", grid);
   let result = find_horizontal_sums(&grid[0]);
-  println!("horizontal sums:  {:?}", result);
 
   // So now I need to find the sums of a vertical row
   // but first I need to extract a vertical row
   // so lets try passing the grid to a function and have it return the 1st vertical row
 
-  vertical_row_extractor(&grid);
+  let mut vertical_grid: Vec<Vec<i32>> = vec![];
+
+  for num in 0..grid.len() {
+    let vertical_row = vertical_row_extractor(&grid, 0);
+    vertical_grid.push(vertical_row);
+  }
+
+  println!("Vertical Grid: {:?}", vertical_grid);
 }
 
 fn find_horizontal_sums(row: &Vec<i32>) -> Vec<i32> {
@@ -100,13 +106,13 @@ fn find_horizontal_sums(row: &Vec<i32>) -> Vec<i32> {
   sums
 }
 
-fn vertical_row_extractor(grid: &Vec<Vec<i32>>) {
+fn vertical_row_extractor(grid: &Vec<Vec<i32>>, index: usize) -> Vec<i32> {
     let mut vertical_row: Vec<i32> = vec![];
 
     for row in grid {
-      vertical_row.push(row[0])
+      vertical_row.push(row[index])
     }
 
-    println!("vertical row extractor: {:?}", vertical_row);
+    vertical_row
 }
 
