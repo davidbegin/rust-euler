@@ -60,21 +60,35 @@ fn grid() {
     vec![01, 70, 54, 71, 83, 51, 54, 69, 16, 92, 33, 48, 61, 43, 52, 01, 89, 19, 67, 48]
   ];
 
-  // println!("Grid: {:?}", grid);
-  let result = find_horizontal_sums(&grid[0]);
+  let mut horizontal_sums: Vec<Vec<i32>> = vec![];
+  for num in 0..grid.len() {
+      let result = find_horizontal_sums(&grid[num]);
+      horizontal_sums.push(result);
+  }
 
-  // So now I need to find the sums of a vertical row
-  // but first I need to extract a vertical row
-  // so lets try passing the grid to a function and have it return the 1st vertical row
+  let highest_horizontal_sum = find_highest_in_grid(horizontal_sums);
+  println!("Highest Horizontal Sum: {}", highest_horizontal_sum);
+
 
   let mut vertical_grid: Vec<Vec<i32>> = vec![];
-
   for num in 0..grid.len() {
     let vertical_row = vertical_row_extractor(&grid, 0);
     vertical_grid.push(vertical_row);
   }
 
-  println!("Vertical Grid: {:?}", vertical_grid);
+  // println!("Vertical Grid: {:?}", vertical_grid);
+}
+
+fn find_highest_in_grid(grid: Vec<Vec<i32>>) -> i32 {
+    let mut highest_for_each: Vec<i32> = vec![];
+
+    for mut row in grid {
+        row.sort();
+        let high: i32 = row.last().unwrap().clone();
+        highest_for_each.push(high);
+    }
+
+    highest_for_each.last().unwrap().clone()
 }
 
 fn find_horizontal_sums(row: &Vec<i32>) -> Vec<i32> {
