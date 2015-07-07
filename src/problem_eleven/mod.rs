@@ -31,12 +31,50 @@ extern crate type_printer;
 
 pub fn result() {
     println!("\nProblem #11 coming soon!");
-    grid();
+
+  let mini_grid: Vec<Vec<i32>> = vec![
+    vec![08, 02, 22, 97, 38],
+    vec![49, 49, 99, 40, 17],
+    vec![81, 49, 31, 73, 55],
+    vec![52, 70, 95, 23, 04],
+  ];
+
+
+  let expected_diagonal_quads: Vec<Vec<i32>> = vec![vec![08, 49, 31, 23], vec![02, 99, 73, 04]];
+  let result = diagonal_quad_finder(mini_grid);
+
+  assert_eq!(result, expected_diagonal_quads);
 }
 
-fn grid() {
-  let grid: Vec<Vec<i32>> = vec![vec![1, 2], vec![2, 3]];
+fn diagonal_quad_finder(grid: Vec<Vec<i32>>) -> Vec<Vec<i32>> {
+  let mut answer: Vec<Vec<i32>> = vec![];
 
+  // ============================================================
+
+  for num in 0..2 {
+    let mut x_index = 0;
+    let mut y_index = num;
+    let mut quad_pair: Vec<i32> = vec![];
+
+    for _ in 0..4 {
+      let value: i32 = grid[x_index][y_index];
+      quad_pair.push(value);
+      x_index += 1;
+      y_index += 1;
+    }
+
+    answer.push(quad_pair);
+  }
+
+  answer
+  // vec![vec![08, 49, 31, 23], vec![02, 99, 73, 04]]
+}
+
+
+
+
+// Attempt #1 =============================================================================
+fn grid() {
   let grid: Vec<Vec<i32>> = vec![
     vec![08, 02, 22, 97, 38, 15, 00, 40, 00, 75, 04, 05, 07, 78, 52, 12, 50, 77, 91, 08],
     vec![49, 49, 99, 40, 17, 81, 18, 57, 60, 87, 17, 40, 98, 43, 69, 48, 04, 56, 62, 00],
