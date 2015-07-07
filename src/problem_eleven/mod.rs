@@ -62,42 +62,29 @@ fn diagonal_quad_finder(grid: Vec<Vec<i32>>) -> Vec<Vec<i32>> {
 
   // ============================================================
 
-  for inner_num in 0..y_upper_range {
-    let mut x_index = 0;
-    let mut y_index = inner_num;
-    let mut quad_pair: Vec<i32> = vec![];
+  for outer in 0..2 {
+    println!("OUTER : {}", outer);
 
-    for _ in 0..4 {
-      let value: i32 = grid[x_index][y_index];
-      quad_pair.push(value);
-      x_index += 1;
-      y_index += 1;
+    for inner_num in 0..y_upper_range {
+      let mut x_index = outer;
+      let mut y_index = inner_num;
+      let mut quad_pair: Vec<i32> = vec![];
+
+      for _ in 0..4 {
+        let value: i32 = grid[x_index][y_index];
+        quad_pair.push(value);
+        x_index += 1;
+        y_index += 1;
+      }
+
+      answer.push(quad_pair);
     }
-
-    answer.push(quad_pair);
-  }
-
-  // ============================================================
-
-  for inner_num in 0..y_upper_range {
-    let mut x_index = 1;
-    let mut y_index = inner_num;
-    let mut quad_pair: Vec<i32> = vec![];
-
-    for _ in 0..4 {
-      let value: i32 = grid[x_index][y_index];
-      quad_pair.push(value);
-      x_index += 1;
-      y_index += 1;
-    }
-
-    answer.push(quad_pair);
   }
 
 
   // ============================================================
 
-  // println!("ANSWER {:?}", answer);
+  println!("ANSWER {:?}", answer);
 
   answer
     // vec![
