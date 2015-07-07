@@ -56,13 +56,10 @@ pub fn result() {
 fn diagonal_quad_finder(grid: Vec<Vec<i32>>) -> Vec<Vec<i32>> {
   let mut answer: Vec<Vec<i32>> = vec![];
 
-
-  // let x_upper_range = grid.first().unwrap().len() - 3;
+  let x_upper_range = grid.first().unwrap().len() - 3;
   let y_upper_range = grid.first().unwrap().len() - 3;
 
-  // ============================================================
-
-  for outer in 0..2 {
+  for outer in 0..x_upper_range {
     println!("OUTER : {}", outer);
 
     for inner_num in 0..y_upper_range {
@@ -80,9 +77,6 @@ fn diagonal_quad_finder(grid: Vec<Vec<i32>>) -> Vec<Vec<i32>> {
       answer.push(quad_pair);
     }
   }
-
-
-  // ============================================================
 
   println!("ANSWER {:?}", answer);
 
