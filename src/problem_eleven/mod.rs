@@ -44,6 +44,7 @@ pub fn result() {
   let result = diagonal_quad_finder(mini_grid);
 
   assert_eq!(result, expected_diagonal_quads);
+  println!("\n\n\tIT WORKED!!!!\n\n");
 }
 
 fn diagonal_quad_finder(grid: Vec<Vec<i32>>) -> Vec<Vec<i32>> {
@@ -51,7 +52,9 @@ fn diagonal_quad_finder(grid: Vec<Vec<i32>>) -> Vec<Vec<i32>> {
 
   // ============================================================
 
-  for num in 0..2 {
+  let y_upper_range = grid.first().unwrap().len() - 3;
+
+  for num in 0..y_upper_range {
     let mut x_index = 0;
     let mut y_index = num;
     let mut quad_pair: Vec<i32> = vec![];
