@@ -108,7 +108,28 @@ fn grid() {
 
   // So Now I need to sum them all making a grid
   // then find the highest in the grid
-  println!("diagonal_pairs: {:?}", diagonal_pairs);
+  // println!("diagonal_pairs: {:?}", diagonal_pairs);
+
+  let mut diagonal_sums: Vec<i32> = vec![];
+
+  for num in 0..grid.len() {
+      let result = find_horizontal_sums(&diagonal_pairs[num]).first().unwrap().clone();
+      diagonal_sums.push(result);
+  }
+
+  diagonal_sums.sort();
+  let highest_diagonal_sum = diagonal_sums.last().unwrap();
+  println!("highest diagonal: {}", highest_diagonal_sum);
+
+  if highest_horizontal_sum.clone() > highest_vertical_sum.clone() &&
+      highest_horizontal_sum.clone() > highest_diagonal_sum.clone() {
+          println!("Highest: {}", highest_horizontal_sum);
+      } else if highest_vertical_sum.clone() > highest_horizontal_sum.clone() &&
+          highest_vertical_sum.clone() > highest_diagonal_sum.clone() {
+              println!("Highest: {}", highest_vertical_sum.clone());
+          } else {
+              println!("Highest: {}", highest_diagonal_sum.clone());
+          }
 }
 
 fn find_highest_in_grid(grid: Vec<Vec<i32>>) -> i32 {
