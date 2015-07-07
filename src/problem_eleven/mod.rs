@@ -166,7 +166,7 @@ fn find_horizontal_sums(row: &Vec<i32>) -> Vec<i32> {
   let mut sums: Vec<i32> = vec![];
 
   for pair in pairs {
-    let result = pair.iter().fold(0, |acc, num| acc + num);
+    let result = pair.iter().fold(1, |acc, num| acc * num);
     sums.push(result);
   }
 
