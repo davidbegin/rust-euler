@@ -37,10 +37,16 @@ pub fn result() {
     vec![49, 49, 99, 40, 17],
     vec![81, 49, 31, 73, 55],
     vec![52, 70, 95, 23, 04],
+    vec![18, 64, 11, 21, 09],
   ];
 
 
-  let expected_diagonal_quads: Vec<Vec<i32>> = vec![vec![08, 49, 31, 23], vec![02, 99, 73, 04]];
+  let expected_diagonal_quads: Vec<Vec<i32>> = vec![
+    vec![08, 49, 31, 23],
+    vec![02, 99, 73, 04],
+    vec![49, 49, 95, 21],
+    vec![49, 31, 23, 09]
+  ];
   let result = diagonal_quad_finder(mini_grid);
 
   assert_eq!(result, expected_diagonal_quads);
@@ -50,13 +56,15 @@ pub fn result() {
 fn diagonal_quad_finder(grid: Vec<Vec<i32>>) -> Vec<Vec<i32>> {
   let mut answer: Vec<Vec<i32>> = vec![];
 
-  // ============================================================
 
+  // let x_upper_range = grid.first().unwrap().len() - 3;
   let y_upper_range = grid.first().unwrap().len() - 3;
 
-  for num in 0..y_upper_range {
+  // ============================================================
+
+  for inner_num in 0..y_upper_range {
     let mut x_index = 0;
-    let mut y_index = num;
+    let mut y_index = inner_num;
     let mut quad_pair: Vec<i32> = vec![];
 
     for _ in 0..4 {
@@ -69,8 +77,35 @@ fn diagonal_quad_finder(grid: Vec<Vec<i32>>) -> Vec<Vec<i32>> {
     answer.push(quad_pair);
   }
 
+  // ============================================================
+
+  for inner_num in 0..y_upper_range {
+    let mut x_index = 1;
+    let mut y_index = inner_num;
+    let mut quad_pair: Vec<i32> = vec![];
+
+    for _ in 0..4 {
+      let value: i32 = grid[x_index][y_index];
+      quad_pair.push(value);
+      x_index += 1;
+      y_index += 1;
+    }
+
+    answer.push(quad_pair);
+  }
+
+
+  // ============================================================
+
+  // println!("ANSWER {:?}", answer);
+
   answer
-  // vec![vec![08, 49, 31, 23], vec![02, 99, 73, 04]]
+    // vec![
+    //   vec![08, 49, 31, 23],
+    //   vec![02, 99, 73, 04],
+    //   vec![49, 49, 95, 21],
+    //   vec![49, 31, 23, 09]
+    // ]
 }
 
 
