@@ -12,6 +12,8 @@ pub fn add_two(a: i32) -> i32 {
 
 pub fn result() {
     println!("\nProblem 3 coming soon!\n");
+
+    // find_factors();
 }
 
 fn find_factors(num: u64) -> Vec<u64> {

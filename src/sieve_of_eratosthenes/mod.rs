@@ -1,8 +1,37 @@
 extern crate type_printer;
-pub fn attempt_1() {
+use std::thread;
+use std::io::prelude::*;
+use std::io;
+
+pub fn attempt_2() {
     println!("\nSieve Of Eratosthenes");
     println!("=====================\n");
 
+    print!("    ");
+    io::stdout().flush().ok().expect("Could not flush stdout");
+
+    for i in (2..121) {
+      let spacing: String = if i < 10 {
+        "   ".to_string()
+      } else if i < 100 {
+        "  ".to_string()
+      } else {
+        " ".to_string()
+      };
+
+      if i % 10 == 0 {
+        println!("{}", i);
+      } else {
+        print!("{}{}", i, spacing);
+      }
+
+      io::stdout().flush().ok().expect("Could not flush stdout");
+
+      thread::sleep_ms(30);
+    };
+}
+
+pub fn attempt_1() {
     let range = (2..210).map(|i| {
         Number {
             number: i,
