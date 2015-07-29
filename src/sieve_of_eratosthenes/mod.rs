@@ -1,16 +1,25 @@
 extern crate type_printer;
+extern crate term;
+extern crate primal;
 use std::thread;
 use std::io::prelude::*;
 use std::io;
+use std::cmp::Ordering;
 
 pub fn attempt_2() {
     println!("\nSieve Of Eratosthenes");
     println!("=====================\n");
 
+    let mut t = term::stdout().unwrap();
+
     print!("    ");
     io::stdout().flush().ok().expect("Could not flush stdout");
 
     for i in (2..121) {
+      if primal::is_prime(i) {
+        t.fg(term::color::RED).unwrap();
+      }
+
       let spacing: String = if i < 10 {
         "   ".to_string()
       } else if i < 100 {
@@ -28,7 +37,10 @@ pub fn attempt_2() {
       io::stdout().flush().ok().expect("Could not flush stdout");
 
       thread::sleep_ms(30);
+      t.fg(term::color::GREEN).unwrap();
     };
+
+    t.reset().unwrap();
 }
 
 pub fn attempt_1() {
