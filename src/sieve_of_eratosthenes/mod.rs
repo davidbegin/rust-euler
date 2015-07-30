@@ -10,10 +10,63 @@ pub fn attempt_2() {
     println!("\nSieve Of Eratosthenes");
     println!("=====================\n");
 
-    let mut t = term::stdout().unwrap();
+    let mut numbers: Vec<PNumber> = vec![];
 
-    print!("    ");
-    io::stdout().flush().ok().expect("Could not flush stdout");
+    for i in (2..121) {
+      let number = PNumber {
+        num: i,
+        is_prime: true
+      };
+
+      numbers.push(number);
+    }
+
+    print_sieve(numbers);
+}
+
+#[derive(Debug)]
+struct PNumber {
+    num: i32,
+    is_prime: bool,
+}
+
+fn print_sieve(numbers: Vec<PNumber>) {
+  let mut t = term::stdout().unwrap();
+
+  print!("    ");
+  io::stdout().flush().ok().expect("Could not flush stdout");
+
+  for num in numbers {
+      if num.is_prime {
+        t.fg(term::color::RED).unwrap();
+      } else {
+        t.fg(term::color::YELLOW).unwrap();
+      }
+
+      let spacing: String = if num.num < 10 {
+        "   ".to_string()
+      } else if num.num < 100 {
+        "  ".to_string()
+      } else {
+        " ".to_string()
+      };
+
+      if num.num % 10 == 0 {
+        println!("{}", num.num);
+      } else {
+        print!("{}{}", num.num, spacing);
+      }
+
+      io::stdout().flush().ok().expect("Could not flush stdout");
+
+      thread::sleep_ms(30);
+
+      t.reset().unwrap();
+  }
+}
+
+fn fake_sieve() {
+  let mut t = term::stdout().unwrap();
 
     for i in (2..121) {
       if primal::is_prime(i) {
