@@ -21,6 +21,7 @@ pub fn attempt_2() {
       numbers.push(number);
     }
 
+    // convert_not_prime_to_prime()
     print_sieve(numbers);
 }
 
@@ -28,6 +29,15 @@ pub fn attempt_2() {
 struct PNumber {
     num: i32,
     is_prime: bool,
+}
+
+fn convert_not_prime_to_prime(number_to_convert: PNumber) -> PNumber {
+    let num = PNumber {
+        num: number_to_convert.num,
+        is_prime: true
+    };
+
+    num
 }
 
 fn print_sieve(numbers: Vec<PNumber>) {
