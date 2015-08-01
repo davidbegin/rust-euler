@@ -15,14 +15,30 @@ pub fn attempt_2() {
     for i in (2..121) {
       let number = PNumber {
         num: i,
-        is_prime: true
+        is_prime: false
       };
 
       numbers.push(number);
     }
 
-    // convert_not_prime_to_prime()
     print_sieve(numbers);
+
+    let mut numbers: Vec<PNumber> = vec![];
+
+    for i in (2..121) {
+      let number = PNumber {
+        num: i,
+        is_prime: false
+      };
+
+      numbers.push(number);
+    }
+
+    let result: Vec<PNumber> = numbers.iter().map(|pnum| {
+        convert_not_prime_to_prime(pnum)
+    }).collect::<Vec<PNumber>>();
+
+    print_sieve(result);
 }
 
 #[derive(Debug)]
@@ -31,7 +47,7 @@ struct PNumber {
     is_prime: bool,
 }
 
-fn convert_not_prime_to_prime(number_to_convert: PNumber) -> PNumber {
+fn convert_not_prime_to_prime(number_to_convert: &PNumber) -> PNumber {
     let num = PNumber {
         num: number_to_convert.num,
         is_prime: true
@@ -40,6 +56,7 @@ fn convert_not_prime_to_prime(number_to_convert: PNumber) -> PNumber {
     num
 }
 
+// I need to convert this to not take ownership
 fn print_sieve(numbers: Vec<PNumber>) {
   let mut t = term::stdout().unwrap();
 
