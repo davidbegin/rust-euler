@@ -5,11 +5,10 @@ use std::thread;
 use std::io::prelude::*;
 use std::io;
 use std::cmp::Ordering;
+use std::process::Command;
 
 pub fn attempt_2() {
-    println!("\nSieve Of Eratosthenes");
-    println!("=====================\n");
-
+    clear_screen();
     let mut numbers: Vec<PNumber> = vec![];
 
     for i in (2..121) {
@@ -34,11 +33,37 @@ pub fn attempt_2() {
       numbers.push(number);
     }
 
+    let mut prime_increamentor = 2;
+    let mut next_non_prime_number = 4;
+
     let result: Vec<PNumber> = numbers.iter().map(|pnum| {
-        convert_not_prime_to_prime(pnum)
+        if pnum.num == next_non_prime_number {
+          next_non_prime_number += prime_increamentor;
+          convert_not_prime_to_prime(pnum)
+        } else {
+          PNumber {
+            num: pnum.num,
+            is_prime: pnum.is_prime
+          }
+        }
     }).collect::<Vec<PNumber>>();
 
+    clear_screen();
     print_sieve(result);
+}
+
+fn clear_screen() {
+    let output = Command::new("clear").output().unwrap_or_else(|e| {
+      panic!("failed to execute process: {}", e)
+    });
+
+    println!("{}", String::from_utf8_lossy(&output.stdout));
+    print_title();
+}
+
+fn print_title() {
+    println!("\nSieve Of Eratosthenes");
+    println!("=====================\n");
 }
 
 #[derive(Debug)]
