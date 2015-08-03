@@ -27,29 +27,43 @@ pub fn attempt_2() {
     for i in (2..121) {
       let number = PNumber {
         num: i,
-        is_prime: false
+        is_prime: true
       };
 
       numbers.push(number);
     }
 
     let mut prime_increamentor = 2;
-    let mut next_non_prime_number = 4;
 
-    let result: Vec<PNumber> = numbers.iter().map(|pnum| {
-        if pnum.num == next_non_prime_number {
-          next_non_prime_number += prime_increamentor;
-          convert_not_prime_to_prime(pnum)
-        } else {
-          PNumber {
-            num: pnum.num,
-            is_prime: pnum.is_prime
+    loop {
+      prime_increamentor = find_next_non_prime_number(&numbers, &prime_increamentor);
+      let mut next_non_prime_number = prime_increamentor + prime_increamentor;
+
+      let result: Vec<PNumber> = numbers.iter().map(|pnum| {
+          if pnum.num == prime_increamentor {
+            convert_prime_to_not_prime(pnum)
+          } else if pnum.num == next_non_prime_number {
+            next_non_prime_number += prime_increamentor;
+            convert_prime_to_not_prime(pnum)
+          } else {
+            PNumber {
+              num: pnum.num,
+              is_prime: pnum.is_prime
+            }
           }
-        }
-    }).collect::<Vec<PNumber>>();
+      }).collect::<Vec<PNumber>>();
 
-    clear_screen();
-    print_sieve(result);
+      clear_screen();
+      print_sieve(result);
+    }
+}
+
+fn find_next_non_prime_number(numbers: &Vec<PNumber>, prime_increamentor: &i32) -> i32 {
+    let next_non_prime_number = numbers.iter().find(|pnum| {
+      primal::is_prime(pnum.num as u64) && pnum.num > prime_increamentor.clone()
+    });
+
+    next_non_prime_number.unwrap().num
 }
 
 fn clear_screen() {
@@ -72,10 +86,10 @@ struct PNumber {
     is_prime: bool,
 }
 
-fn convert_not_prime_to_prime(number_to_convert: &PNumber) -> PNumber {
+fn convert_prime_to_not_prime(number_to_convert: &PNumber) -> PNumber {
     let num = PNumber {
         num: number_to_convert.num,
-        is_prime: true
+        is_prime: false
     };
 
     num
