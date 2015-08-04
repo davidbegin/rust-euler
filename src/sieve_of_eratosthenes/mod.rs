@@ -9,31 +9,12 @@ use std::process::Command;
 
 pub fn attempt_2() {
     clear_screen();
-    let mut numbers: Vec<PNumber> = vec![];
 
-    for i in (2..121) {
-      let number = PNumber {
-        num: i,
-        is_prime: false
-      };
 
-      numbers.push(number);
-    }
+    let numbers = starting_sieve();
+    print_sieve(&numbers);
 
-    print_sieve(numbers);
-
-    let mut numbers: Vec<PNumber> = vec![];
-
-    for i in (2..121) {
-      let number = PNumber {
-        num: i,
-        is_prime: true
-      };
-
-      numbers.push(number);
-    }
-
-    let mut prime_increamentor = 2;
+    let mut prime_increamentor = 0;
 
     loop {
       prime_increamentor = find_next_non_prime_number(&numbers, &prime_increamentor);
@@ -54,8 +35,22 @@ pub fn attempt_2() {
       }).collect::<Vec<PNumber>>();
 
       clear_screen();
-      print_sieve(result);
+      print_sieve(&result);
     }
+}
+
+fn starting_sieve() -> Vec<PNumber> {
+    let mut numbers: Vec<PNumber> = vec![];
+
+    for i in (2..121) {
+      let number = PNumber {
+        num: i,
+        is_prime: true
+      };
+
+      numbers.push(number);
+    }
+    numbers
 }
 
 fn find_next_non_prime_number(numbers: &Vec<PNumber>, prime_increamentor: &i32) -> i32 {
@@ -96,7 +91,7 @@ fn convert_prime_to_not_prime(number_to_convert: &PNumber) -> PNumber {
 }
 
 // I need to convert this to not take ownership
-fn print_sieve(numbers: Vec<PNumber>) {
+fn print_sieve(numbers: &Vec<PNumber>) {
   let mut t = term::stdout().unwrap();
 
   print!("    ");
@@ -104,9 +99,9 @@ fn print_sieve(numbers: Vec<PNumber>) {
 
   for num in numbers {
       if num.is_prime {
-        t.fg(term::color::RED).unwrap();
+        t.fg(term::color::BRIGHT_MAGENTA).unwrap();
       } else {
-        t.fg(term::color::YELLOW).unwrap();
+        t.fg(term::color::WHITE).unwrap();
       }
 
       let spacing: String = if num.num < 10 {
@@ -125,7 +120,8 @@ fn print_sieve(numbers: Vec<PNumber>) {
 
       io::stdout().flush().ok().expect("Could not flush stdout");
 
-      thread::sleep_ms(30);
+      // Make constant
+      thread::sleep_ms(20);
 
       t.reset().unwrap();
   }
