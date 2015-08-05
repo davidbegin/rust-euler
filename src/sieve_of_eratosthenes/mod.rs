@@ -10,44 +10,47 @@ use std::process::Command;
 pub fn attempt_2() {
     clear_screen();
 
-
     let numbers = starting_sieve();
     print_sieve(&numbers);
 
     let mut prime_increamentor = 0;
+    sieve_cycle(&numbers, prime_increamentor);
+}
 
-    loop {
-      prime_increamentor = find_next_non_prime_number(&numbers, &prime_increamentor);
-      let mut next_non_prime_number = prime_increamentor + prime_increamentor;
+fn sieve_cycle(sieve: &Vec<PNumber>, old_prime_increamentor: i32) -> Vec<PNumber> {
+  let new_prime_increamentor = find_next_non_prime_number(&sieve, &old_prime_increamentor);
+  let mut next_non_prime_number = new_prime_increamentor + new_prime_increamentor;
 
-      let result: Vec<PNumber> = numbers.iter().map(|pnum| {
-          if pnum.num == prime_increamentor {
-            convert_prime_to_not_prime(pnum)
-          } else if pnum.num == next_non_prime_number {
-            next_non_prime_number += prime_increamentor;
-            convert_prime_to_not_prime(pnum)
-          } else {
-            PNumber {
-              num: pnum.num,
-              is_prime: pnum.is_prime
-            }
-          }
-      }).collect::<Vec<PNumber>>();
+  let result: Vec<PNumber> = sieve.iter().map(|pnum| {
+    if pnum.num == new_prime_increamentor {
+      PNumber {
+        num: pnum.num,
+        is_prime: pnum.is_prime
+      }
+    } else if pnum.num == next_non_prime_number {
+      next_non_prime_number += new_prime_increamentor;
+      convert_prime_to_not_prime(pnum)
 
-      clear_screen();
-      print_sieve(&result);
+    } else {
+      PNumber {
+        num: pnum.num,
+        is_prime: pnum.is_prime
+      }
     }
+  }).collect::<Vec<PNumber>>();
+
+  clear_screen();
+  print_sieve(&result);
+  result
 }
 
 fn starting_sieve() -> Vec<PNumber> {
     let mut numbers: Vec<PNumber> = vec![];
-
     for i in (2..121) {
       let number = PNumber {
         num: i,
         is_prime: true
       };
-
       numbers.push(number);
     }
     numbers
@@ -121,7 +124,7 @@ fn print_sieve(numbers: &Vec<PNumber>) {
       io::stdout().flush().ok().expect("Could not flush stdout");
 
       // Make constant
-      thread::sleep_ms(20);
+      thread::sleep_ms(50);
 
       t.reset().unwrap();
   }
