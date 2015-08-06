@@ -8,40 +8,42 @@ use std::cmp::Ordering;
 use std::process::Command;
 
 pub fn attempt_2() {
-    clear_screen();
+    print_title();
 
     let numbers = starting_sieve();
-    print_sieve(&numbers);
-
     let mut prime_increamentor = 0;
     sieve_cycle(&numbers, prime_increamentor);
 }
 
-fn sieve_cycle(sieve: &Vec<PNumber>, old_prime_increamentor: i32) -> Vec<PNumber> {
-  let new_prime_increamentor = find_next_non_prime_number(&sieve, &old_prime_increamentor);
+fn sieve_cycle(sieve: &Vec<PNumber>, old_prime_increamentor: i32) {
+  let new_prime_increamentor = find_next_non_prime_number(
+      &sieve, &old_prime_increamentor
+  );
+
   let mut next_non_prime_number = new_prime_increamentor + new_prime_increamentor;
 
-  let result: Vec<PNumber> = sieve.iter().map(|pnum| {
-    if pnum.num == new_prime_increamentor {
-      PNumber {
-        num: pnum.num,
-        is_prime: pnum.is_prime
-      }
-    } else if pnum.num == next_non_prime_number {
+  let result: Vec<PNumber> = sieve
+      .iter()
+      .map(|pnum| {
+
+    if pnum.num == next_non_prime_number {
       next_non_prime_number += new_prime_increamentor;
       convert_prime_to_not_prime(pnum)
-
     } else {
       PNumber {
         num: pnum.num,
         is_prime: pnum.is_prime
       }
     }
+
   }).collect::<Vec<PNumber>>();
 
-  clear_screen();
+  print_title();
+  println!("\nOld Prime Incrementor: {}", old_prime_increamentor);
+  println!("New Prime Incrementor: {}\n", new_prime_increamentor);
+
   print_sieve(&result);
-  result
+  sieve_cycle(&result, new_prime_increamentor);
 }
 
 fn starting_sieve() -> Vec<PNumber> {
@@ -68,14 +70,14 @@ fn clear_screen() {
     let output = Command::new("clear").output().unwrap_or_else(|e| {
       panic!("failed to execute process: {}", e)
     });
-
     println!("{}", String::from_utf8_lossy(&output.stdout));
-    print_title();
 }
 
 fn print_title() {
+    clear_screen();
     println!("\nSieve Of Eratosthenes");
     println!("=====================\n");
+    print_legend();
 }
 
 #[derive(Debug)]
@@ -93,7 +95,18 @@ fn convert_prime_to_not_prime(number_to_convert: &PNumber) -> PNumber {
     num
 }
 
-// I need to convert this to not take ownership
+fn print_legend() {
+  let mut t = term::stdout().unwrap();
+  io::stdout().flush().ok().expect("Could not flush stdout");
+
+  t.fg(term::color::BRIGHT_MAGENTA).unwrap();
+  println!("PRIME");
+  t.fg(term::color::BRIGHT_YELLOW).unwrap();
+  println!("NOT PRIME\n");
+
+  io::stdout().flush().ok().expect("Could not flush stdout");
+}
+
 fn print_sieve(numbers: &Vec<PNumber>) {
   let mut t = term::stdout().unwrap();
 
@@ -104,7 +117,7 @@ fn print_sieve(numbers: &Vec<PNumber>) {
       if num.is_prime {
         t.fg(term::color::BRIGHT_MAGENTA).unwrap();
       } else {
-        t.fg(term::color::WHITE).unwrap();
+        t.fg(term::color::BRIGHT_YELLOW).unwrap();
       }
 
       let spacing: String = if num.num < 10 {
@@ -159,90 +172,4 @@ fn fake_sieve() {
     };
 
     t.reset().unwrap();
-}
-
-pub fn attempt_1() {
-    let range = (2..210).map(|i| {
-        Number {
-            number: i,
-            marked: false,
-        }
-    });
-
-    let (marked_numbers_1, found_primes_1) = sieve(range.collect::<Vec<Number>>(), vec![]);
-}
-
-struct Number {
-    number: i32,
-    marked: bool,
-}
-
-fn sieve(sieve_to_filter: Vec<Number>, found_primes: Vec<i32>) -> (Vec<Number>, Vec<i32>) {
-    let limit: i32 = 210;
-    let mut new_found_primes: Vec<i32> = found_primes.clone();
-    let mut prime_for_numbers_to_delete_list: i32;
-
-    {
-        let prime_option = sieve_to_filter.iter().find(|i| {
-            let is_already_in_the_prime_list = match found_primes
-                .iter()
-                .find(|fp| **fp == i.number ) {
-                    Some(_) => true,
-                    None => false
-                };
-            !i.marked && !is_already_in_the_prime_list
-        });
-
-        let prime = match prime_option {
-            Some(x) => x.number,
-            None => {
-                let filtered_sieve = sieve_to_filter.iter().map(|i| {
-                    if i.marked {
-                        Number { marked: true, number: i.number.clone() }
-                    } else {
-                        Number { marked: false, number: i.number.clone() }
-                    }
-                });
-
-                return (filtered_sieve.collect::<Vec<_>>() , new_found_primes)
-            }
-        };
-
-        prime_for_numbers_to_delete_list = prime.clone();
-        new_found_primes.push(prime.clone());
-
-        let non_primes_to_delete = (prime_for_numbers_to_delete_list..limit)
-            .step_by(prime_for_numbers_to_delete_list)
-            .collect::<Vec<i32>>();
-
-        let mut counter: i32 = 1;
-        print!(" 0 ");
-
-        let filtered_sieve = sieve_to_filter.iter().map(|i| {
-            let should_we_mark_it = match non_primes_to_delete.iter().find(|&x| {
-                *x == i.number || i.marked
-            }) {
-                Some(_) => true,
-                None => false
-            };
-
-            if counter == 10 {
-                println!("\n");
-                counter = 1;
-            } else {
-                counter += 1
-            }
-
-            if should_we_mark_it {
-                print!(" X ");
-                Number { marked: true, number: i.number.clone() }
-            } else {
-                print!(" O ");
-                Number { marked: false, number: i.number.clone() }
-            }
-        });
-
-        // (filtered_sieve.collect::<Vec<_>>(), new_found_primes)
-        sieve(filtered_sieve.collect::<Vec<_>>(), new_found_primes)
-    }
 }
