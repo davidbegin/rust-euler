@@ -20,6 +20,10 @@ fn sieve_cycle(sieve: &Vec<PNumber>, old_prime_increamentor: i32) {
       &sieve, &old_prime_increamentor
   );
 
+  if new_prime_increamentor == -1 {
+      return;
+  }
+
   let mut next_non_prime_number = new_prime_increamentor + new_prime_increamentor;
 
   let result: Vec<PNumber> = sieve
@@ -43,11 +47,7 @@ fn sieve_cycle(sieve: &Vec<PNumber>, old_prime_increamentor: i32) {
   println!("New Prime Incrementor: {}\n", new_prime_increamentor);
 
   print_sieve(&result);
-  if new_prime_increamentor == 113 {
-    return;
-  } else {
-    sieve_cycle(&result, new_prime_increamentor);
-  }
+  sieve_cycle(&result, new_prime_increamentor);
 }
 
 fn starting_sieve() -> Vec<PNumber> {
@@ -63,11 +63,20 @@ fn starting_sieve() -> Vec<PNumber> {
 }
 
 fn find_next_non_prime_number(numbers: &Vec<PNumber>, prime_increamentor: &i32) -> i32 {
-    let next_non_prime_number = numbers.iter().find(|pnum| {
+    let next_non_prime_number_option = numbers.iter().find(|pnum| {
       primal::is_prime(pnum.num as u64) && pnum.num > prime_increamentor.clone()
     });
 
-    next_non_prime_number.unwrap().num
+    let next_non_prime_number = match next_non_prime_number_option {
+        Some(p_num) => {
+            p_num.num
+        },
+        None => {
+            -1
+        }
+    };
+
+    next_non_prime_number
 }
 
 fn clear_screen() {
