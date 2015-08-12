@@ -43,7 +43,11 @@ fn sieve_cycle(sieve: &Vec<PNumber>, old_prime_increamentor: i32) {
   println!("New Prime Incrementor: {}\n", new_prime_increamentor);
 
   print_sieve(&result);
-  sieve_cycle(&result, new_prime_increamentor);
+  if new_prime_increamentor == 113 {
+    return;
+  } else {
+    sieve_cycle(&result, new_prime_increamentor);
+  }
 }
 
 fn starting_sieve() -> Vec<PNumber> {
@@ -102,7 +106,7 @@ fn print_legend() {
   t.fg(term::color::BRIGHT_MAGENTA).unwrap();
   println!("PRIME");
   t.fg(term::color::BRIGHT_YELLOW).unwrap();
-  println!("NOT PRIME\n");
+  println!("NOT PRIME");
 
   io::stdout().flush().ok().expect("Could not flush stdout");
 }
@@ -137,39 +141,8 @@ fn print_sieve(numbers: &Vec<PNumber>) {
       io::stdout().flush().ok().expect("Could not flush stdout");
 
       // Make constant
-      thread::sleep_ms(50);
+      thread::sleep_ms(5);
 
       t.reset().unwrap();
   }
-}
-
-fn fake_sieve() {
-  let mut t = term::stdout().unwrap();
-
-    for i in (2..121) {
-      if primal::is_prime(i) {
-        t.fg(term::color::RED).unwrap();
-      }
-
-      let spacing: String = if i < 10 {
-        "   ".to_string()
-      } else if i < 100 {
-        "  ".to_string()
-      } else {
-        " ".to_string()
-      };
-
-      if i % 10 == 0 {
-        println!("{}", i);
-      } else {
-        print!("{}{}", i, spacing);
-      }
-
-      io::stdout().flush().ok().expect("Could not flush stdout");
-
-      thread::sleep_ms(30);
-      t.fg(term::color::GREEN).unwrap();
-    };
-
-    t.reset().unwrap();
 }
