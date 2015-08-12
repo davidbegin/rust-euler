@@ -1,3 +1,5 @@
+#![feature(test)]
+
 extern crate type_printer;
 extern crate term;
 extern crate primal;
@@ -9,7 +11,6 @@ use std::process::Command;
 
 pub fn attempt_2() {
     print_title();
-
     let numbers = starting_sieve();
     let mut prime_increamentor = 0;
     sieve_cycle(&numbers, prime_increamentor);
@@ -20,16 +21,13 @@ fn sieve_cycle(sieve: &Vec<PNumber>, old_prime_increamentor: i32) {
       &sieve, &old_prime_increamentor
   );
 
-  if new_prime_increamentor == -1 {
-      return;
-  }
+  if new_prime_increamentor == -1 { return; }
 
   let mut next_non_prime_number = new_prime_increamentor + new_prime_increamentor;
 
   let result: Vec<PNumber> = sieve
       .iter()
       .map(|pnum| {
-
     if pnum.num == next_non_prime_number {
       next_non_prime_number += new_prime_increamentor;
       convert_prime_to_not_prime(pnum)
@@ -45,11 +43,11 @@ fn sieve_cycle(sieve: &Vec<PNumber>, old_prime_increamentor: i32) {
   print_title();
   println!("\nOld Prime Incrementor: {}", old_prime_increamentor);
   println!("New Prime Incrementor: {}\n", new_prime_increamentor);
-
   print_sieve(&result);
   sieve_cycle(&result, new_prime_increamentor);
 }
 
+// I need to make this in a more functional
 fn starting_sieve() -> Vec<PNumber> {
     let mut numbers: Vec<PNumber> = vec![];
     for i in (2..121) {
@@ -71,9 +69,7 @@ fn find_next_non_prime_number(numbers: &Vec<PNumber>, prime_increamentor: &i32) 
         Some(p_num) => {
             p_num.num
         },
-        None => {
-            -1
-        }
+        None => -1
     };
 
     next_non_prime_number
@@ -150,8 +146,26 @@ fn print_sieve(numbers: &Vec<PNumber>) {
       io::stdout().flush().ok().expect("Could not flush stdout");
 
       // Make constant
-      thread::sleep_ms(5);
+      // thread::sleep_ms(5);
 
       t.reset().unwrap();
   }
+}
+
+
+extern crate test;
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use super::starting_sieve;
+    use super::sieve_cycle;
+    use test::Bencher;
+
+    #[bench]
+    fn bench_sieve(b: &mut Bencher) {
+        let numbers = starting_sieve();
+        let mut prime_increamentor = 0;
+        b.iter(|| sieve_cycle(&numbers, prime_increamentor));
+    }
 }
