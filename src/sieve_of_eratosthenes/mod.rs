@@ -16,6 +16,37 @@ pub fn attempt_2() {
     sieve_cycle(&numbers, prime_increamentor);
 }
 
+fn sieve_cycle2(sieve: &Vec<PNumber>, old_prime_increamentor: i32) {
+  let new_prime_increamentor = find_next_non_prime_number(
+      &sieve, &old_prime_increamentor
+  );
+
+  if new_prime_increamentor == -1 { return; }
+
+  let mut next_non_prime_number = new_prime_increamentor + new_prime_increamentor;
+  let sieve_iter = sieve.iter();
+
+  let result: Vec<PNumber> = sieve_iter.map(move |pnum| {
+    if pnum.num == next_non_prime_number {
+      next_non_prime_number += new_prime_increamentor;
+      convert_prime_to_not_prime(pnum)
+    } else {
+      // I don't want to create a new Pnum here, but take ownership of this Pnum
+      PNumber {
+        num: pnum.num,
+        is_prime: pnum.is_prime
+      }
+    }
+
+  }).collect::<Vec<PNumber>>();
+
+  print_title();
+  println!("\nOld Prime Incrementor: {}", old_prime_increamentor);
+  println!("New Prime Incrementor: {}\n", new_prime_increamentor);
+  print_sieve(&result);
+  sieve_cycle(&result, new_prime_increamentor);
+}
+
 fn sieve_cycle(sieve: &Vec<PNumber>, old_prime_increamentor: i32) {
   let new_prime_increamentor = find_next_non_prime_number(
       &sieve, &old_prime_increamentor
@@ -160,12 +191,22 @@ mod tests {
     use super::*;
     use super::starting_sieve;
     use super::sieve_cycle;
+    use super::sieve_cycle2;
     use test::Bencher;
 
+    // bench: 146,051,625 ns/iter (+/- 13,231,487)
     #[bench]
     fn bench_sieve(b: &mut Bencher) {
         let numbers = starting_sieve();
         let mut prime_increamentor = 0;
         b.iter(|| sieve_cycle(&numbers, prime_increamentor));
+    }
+
+    // This only has an extra assignment
+    #[bench]
+    fn bench_sieve2(b: &mut Bencher) {
+        let numbers = starting_sieve();
+        let mut prime_increamentor = 0;
+        b.iter(|| sieve_cycle2(&numbers, prime_increamentor));
     }
 }
